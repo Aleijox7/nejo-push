@@ -1,0 +1,96 @@
+.bg-login{
+    background: url("../img/image-login/transport.jpeg") no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+a, a:hover{
+    color: #e78e0e;
+}
+.img-logoLogin{
+    margin-bottom: 20px;
+}
+.contenedor-login{
+    border-radius: 6px;                    
+    background-color:rgba(255,255,255,0.8);
+}
+.caja-login{                    
+    padding: 35px;
+    height: 340px;
+}
+.header-login{
+    padding: 10px;
+    height: 70px;
+    color:#000;
+    border-bottom: 1px solid #eee;
+}
+
+.btn-tema{
+    background: #e78e0e;
+    color:#fff;
+    
+}
+
+.links{
+    padding: 5px;
+}
+
+.auto{
+    height: auto !important;
+}
+/*@media (max-width: 770px){
+    .col-xs-12{
+        width:70% !important;
+        margin-left:80px !important;
+    }
+}
+
+@media (max-width: 540px){
+    .col-xs-12{
+        width:100% !important;
+        margin-left:0px !important;
+    }
+    .col-xs-push-3{
+        margin-left:0px !important;
+    }
+}
+
+@media (max-width: 340px){
+
+    .col-xs-push-3{
+        left:10px !important;
+    }
+
+    .img-logoLogin{
+        margin-left:50px;   
+    }
+}*/
+
+@media (max-width: 540px){
+    .caja-login{
+        padding: 5px;
+    }
+}
+
+@media (max-width: 340px){
+
+    .caja-login{
+        padding: 0px;
+    }
+}
+
+@media (max-height: 600px){
+
+    .vert-center{
+        padding-top: 20px;
+        height: 100%;
+    }
+}
+
+.vert-center{
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+}

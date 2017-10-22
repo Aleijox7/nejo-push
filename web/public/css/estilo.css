@@ -1,0 +1,175 @@
+/* COLORES CORPORATIVOS */ 
+:root {
+  --color-principal: #e78e0e !important;
+  --color-hover: #D3800B !important;
+  --color-texto-blanco: #fff !important; 
+}
+
+/* sticky footer */
+
+html, body, #wrap {height: 100%;}
+
+body > #wrap {height: auto; min-height: 100%;}
+/*body > #wrap {height: auto; min-height: 100%;background-color: rgba(255, 247, 8, 0.21) !important;}*/
+
+#main {padding-bottom: 40px;}  /* debe ser del mismo alto que el footer */
+
+#footer {position: relative;
+    margin-top: -40px; /* valor engativo del alto del footer */
+    height: 40px;
+    padding: 10px 0;
+    clear:both;} 
+
+ 
+
+/** Menu top bar **/
+
+.navbar-inverse{
+    background-color: #282424 !important;
+}
+
+.navbar {
+    min-height: 20px !important;
+}
+.nav>li>a:hover, .nav>li>a:focus{
+    background-color: #888 !important;
+    color:#fff;
+}
+.nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
+    background-color: #888 !important;
+    color:#fff;
+}
+
+.dropdown-menu>li>a:hover {
+    background-color: #888 !important;
+}
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: var(--color-principal);
+}
+
+/** Titulo paginas**/
+.contenedor-titulo{
+    margin-top: 20px;
+}
+
+/**Botones **/
+.btn-mobile{
+    color: #fff !important;
+}   
+
+hr { 
+    border-top: 1px solid #ddd !important;
+}
+.btn-tema{
+    background: var(--color-principal);
+	color: var(--color-texto-blanco);
+}
+
+/*Texto */
+.margin-5-top{
+    margin-top: 5px;
+}
+.margin-15-top{
+    margin-top: 15px;
+}
+
+.margin-30-top{
+    margin-top: 30px;
+}
+
+.negrita {
+    font-weight: bolder;
+}
+
+/* nav left Backend*/
+
+.contenedor-navLeft{
+    margin-top: 150px;
+    position: absolute;
+}
+
+.panel-title a {
+    text-decoration: none !important;
+}
+.panel-tema>.panel-heading {
+    color: #333333;
+    border-color: none !important;
+    background: #ffb76b; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffb76b 0%, #ffa73d 50%, var(--color-principal); 51%, var(--color-principal); 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #ffb76b 0%,#ffa73d 50%,var(--color-principal); 51%,var(--color-principal); 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #ffb76b 0%,#ffa73d 50%,var(--color-principal); 51%,var(--color-principal); 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb76b', endColorstr='var(--color-principal);',GradientType=0 ); /* IE6-9 */
+    color:#fff;
+    text-shadow: 1px 1px #888;
+}
+.nav-left {
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none !important;
+    text-align: center;
+    color: #000;
+
+}
+.nav-left a {
+    margin-top: 10px !important;
+    color: #000;
+    text-decoration: none !important;
+}
+
+.nav-left a:hover {
+    color: var(--color-principal);
+}
+
+/** Tablas **/
+table{
+    text-align: center !important;
+}
+th{
+    background-color: #eee;
+    text-align: center !important;
+}
+td a, td a:hover{
+    color: var(--color-principal);
+}
+
+/** Content **/
+
+
+/*modal */
+.modal-header {
+    background: #eee !important;
+}
+
+.modal-header h4 {
+	color: #000 !important;
+}
+/** paginación**/
+
+.pagination-center{
+    margin-left: 30px;
+}
+.pagination a {
+    color:  var(--color-principal) !important;
+}
+
+.pagination a:hover {
+    color: #fff !important;
+    text-shadow: 1px 1px #888;
+    background-color: var(--color-principal);
+}
+
+/****** Medias *****/
+@media (max-width: 767px){
+    .dropdown-topbar>li>a{
+        color:#fff !important;
+    }                        
+
+}
+
+@media (max-width: 390px){
+    .contenedor-titulo h1{
+        font-size: 30px !important;
+    }    
+}

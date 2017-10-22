@@ -1,3 +1,12 @@
+push_entity:
+    resource: "@PushEntityBundle/Resources/config/routing.xml"
+    prefix:   /entity/
+
+push_toolbox:
+    resource: "@PushToolboxBundle/Controller/"
+    type:     annotation
+    prefix:   /push/
+
 app:
     resource: "@AppBundle/Resources/config/routing.yml"
     prefix:   /

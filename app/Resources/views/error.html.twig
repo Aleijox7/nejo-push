@@ -1,0 +1,8 @@
+<div class="alert notificacion alerta col-xs-12"> <span class="col-xs-11">{{msg}}</span>{% if btnPalabra is defined %}<br>
+	<form method="POST" action="{{path(link)}}">
+		<input class="form-control" type="text" name="username" value="{{username}}" style="visibility: hidden;">
+		<div class="col-xs-12">
+			<input class="btn btn-tema" type="submit" name="submit" value="Verificar">
+		</div>
+	</form>
+{% endif %} <a><i class="rounded fa fa-times" aria-hidden="true"></i></a></div>

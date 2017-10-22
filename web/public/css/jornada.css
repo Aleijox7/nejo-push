@@ -1,0 +1,50 @@
+
+.container-btnjornada{
+    margin-top: 30px;
+    height: 200px;
+}
+
+.btn-jornada{
+    margin-top: 30px;
+}
+
+@media (max-width: 1300px){                                      
+    .container-horaActual{                       
+        margin-left:50px !important;
+    }   
+    .container-btnjornada{
+        margin-left: 30px;
+    }
+}
+
+@media (max-width: 1210px){                                      
+    .container-horaActual{                       
+        margin-left:50px !important;
+    }   
+    .container-btnjornada{
+        margin-left: 50px;
+    }
+}
+
+@media (max-width: 767px){
+    .dropdown-topbar>li>a{
+        color:#fff !important;
+    }                       
+}
+@media (max-width: 540px){                                        
+    .container-horaActual{
+        width:70%;
+        left:80px !important;
+    }
+
+}
+@media (max-width: 390px){
+    
+    .container-horaActual{
+        width:100%;
+        left: 0px !important;
+    }
+    .container-horaActual h4 {
+        font-size: 16px;
+    }
+}

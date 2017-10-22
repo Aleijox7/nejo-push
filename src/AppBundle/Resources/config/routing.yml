@@ -1,3 +1,11 @@
+login:
+    path:     /login/post
+    defaults: { _controller: AppBundle:Access:login }
+
+login_form:
+    path:     /login
+    defaults: { _controller: AppBundle:Access:formLogin }
+
 push_toolbox_homepage:
     path:     /
     defaults: { _controller: AppBundle:Default:index }

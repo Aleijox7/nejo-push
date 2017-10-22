@@ -1,13 +1,797 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Tráfico{% endblock %}</title>
+        {% block stylesheets %}
+            {# <link href="{{ asset('assets/css/bootstrap.css' )}}" rel="stylesheet"> #}
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+            <!--external css-->
+            {# <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/zabuto_calendar.css' )}}"> #}
+            {# <link rel="stylesheet" type="text/css" href="{{ asset('assets/js/gritter/css/jquery.gritter.css' )}}" /> #}
+            {# <link rel="stylesheet" type="text/css" href="{{ asset('assets/lineicons/style.css' )}}"> #}
+            {# <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/spacelab/bootstrap.min.css"> #}
+
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+            <link href="{{ asset('public/css/estilo.css' )}}" rel="stylesheet">
+
+            <!-- Custom styles for this template -->
+            <link href="{{ asset('assets/css/style.css' )}}" rel="stylesheet">
+            <link href="{{ asset('assets/css/style-responsive.css' )}}" rel="stylesheet">
+            <link href="{{ asset('public/css/general.css' )}}" rel="stylesheet">
+            {# <script src="{{ asset('assets/js/jquery.js' )}}"></script>         #}
+            <script src="{{ asset('assets/js/jquery-1.8.3.min.js' )}}"></script>
+        {% endblock %}
+        
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% block head_javascripts %}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+            {#<script src="{{ asset('assets/js/jquery-1.8.3.min.js') }}"></script>#}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment-with-locales.min.js"></script>
+            {# // <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> #}
+            {# // <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.20/daterangepicker.min.js"></script> #}
+            <script src="https://cdn.datatables.net/u/bs/jszip-2.5.0,pdfmake-0.1.18,dt-1.10.12,b-1.2.1,b-colvis-1.2.1,b-flash-1.2.1,b-html5-1.2.1,b-print-1.2.1,r-2.1.0/datatables.min.js"></script>
+            <script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js'></script>
+            <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+
+            {#scripts per a fer el datepicker de bootstrap#}
+            {# // <script src="{{ asset('assets/js/bootstrap-datepicker.min.js') }}"></script> #}
+            {# // <script src="{{ asset('assets/js/locales/bootstrap-datepicker.es.min.js') }}"></script> #}
+        {% endblock %}   
     </head>
+    {% block ante_body %}
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+        {% block body %}
+            <div id="wrap">
+                <section id="container" >
+                    <!-- AQUI SE MOSTRARAN LAS NOTIFICACIONES -->
+                    <div id="notificaciones" class="notification-box col-xs-12 col-sm-4 col-sm-offset-8">
+                    </div>
+                    <!-- **********************************************************************************************************************************************************
+                    TOP BAR CONTENT & NOTIFICATIONS
+                    *********************************************************************************************************************************************************** -->
+                    <!--header start-->
+                    {% block header %}
+                        <header class="header black-bg">
+                            {% block nav_menu %}
+                                <div class="sidebar-toggle-box">
+                                    <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Conmutar Navegación"></div>
+                                </div>
+                            {% endblock %}
+                            <!--logo start-->
+                            <a href="#" class="logo"><img src="{{ asset('public/img/logos/logo.png') }}"></a>
+                            <!--logo end-->
+
+                            {% if app.session.started and app.session.get('sessionUsername') != NULL %}
+                                {% block login %}
+                                    <div class="top-menu">
+                                        <ul class="nav pull-right top-menu text-center">
+                                            {# <li><a class="logout" href="#">Logout</a></li> #}
+                                        </ul>
+                                    </div>
+
+                                    <div class="top-menu nombreUsuario">
+                                        <ul class="nav pull-right top-menu nombreUsuario">
+                                            
+                                                <li><p class="texto-login-username">Has entrado como <strong>{% block userName %} {{app.session.get('sessionUsername')}} {% endblock %}</strong></p></li>
+                                        </ul>
+                                    </div>                       
+                                {% endblock %}
+                            {% endif %}
+                        </header>
+                        <!--header end-->
+                    {% endblock %}
+                    <div id="main">
+
+                        {% block main_sidebar %}
+                            <!-- **********************************************************************************************************************************************************
+                            MAIN SIDEBAR MENU
+                            *********************************************************************************************************************************************************** -->
+                            <!--sidebar start-->
+                            <aside>
+                                <div id="sidebar"  class="nav-collapse ">
+                                    <!-- sidebar menu start-->
+                                    <ul class="sidebar-menu" id="nav-accordion">
+
+                                        <p class="centered"><img src="{{ asset(app.session.get('sessionImage')) }}" class="img-circle" width="80"></p>
+                                        <h5 class="centered">
+                                            <a class="link-blanco" href="#">
+                                                <i class="fa fa-user"></i> 
+                                                <span>{{ block('userName') }}</span>
+                                            </a>
+                                             
+                                        </h5>
+                                        <li><br /><br /></li>
+                                        {% block entradas_menu %}
+                                            {#<li>
+                                                <a href="{{ path('infojic_control_horario_backend_homepage') }}" class="{% if app.request.attributes.get('_route') == 'infojic_control_horario_backend_homepage' %}active{% endif %}">
+                                                    <i class="fa fa-dashboard"></i> 
+                                                    <span>INICIO</span>
+                                                </a>
+                                            </li>#}
+                                        
+                                        {# Todos los usuarios tienen acceso a su perfil#}
+                                        {#fa-tachometer#}
+                                        <li>
+                                            <a href="{{path('apps_infojic_gestor_proyectos_dashboard')}}" class="{% if app.request.attributes.get('_route') == 'apps_infojic_gestor_proyectos_dashboard' %}active{% endif %}">
+                                                <i class="fa fa-tachometer"></i> 
+                                                <span>DASHBOARD</span>
+                                            </a>
+                                        </li>
+                                        
+                                        {# Los usuarios con los siguentes roles tienen acceso a Equipos:
+                                        Miembro, Administrador y Gestor
+                                        #}
+                                        <li>
+                                            <a href="{{path('apps_infojic_gestor_proyectos_teams')}}" class="{% if app.request.attributes.get('_route') == 'apps_infojic_gestor_proyectos_teams' %}active{% endif %}">
+                                                <i class="fa fa-users"></i> 
+                                                <span>TEAMS</span>
+                                            </a>
+                                        </li>
+                                        {# Los usuarios con los siguentes roles tienen acceso a Usuarios:
+                                        Administrador
+                                        #}
+                                        <li>
+                                            <a href="{{path('apps_infojic_gestor_proyectos_users')}}" class="{% if app.request.attributes.get('_route') == 'apps_infojic_gestor_proyectos_users' %}active{% endif %}">
+                                                <i class="fa fa-users"></i> 
+                                                <span>USUARIOS</span>
+                                            </a>
+                                        </li>
+                                        {# Los usuarios con los siguentes roles tienen acceso a Proyectos:
+                                        Miembro, Administrador y Gestor
+                                        #}
+                                        <li>
+                                            <a href="{{path('apps_infojic_gestor_proyectos_proyectos')}}" class="{% if app.request.attributes.get('_route') == 'apps_infojic_gestor_proyectos_proyectos' %}active{% endif %}">
+                                                <i class="fa fa-book"></i> 
+                                                <span>PROYECTOS</span>
+                                            </a>
+                                        </li>
+                                        {# Los usuarios con los siguentes roles tienen acceso a Tickets:
+                                        Client, Miembro y Gestor
+                                        #}
+                                        <li>
+                                            <a href="{{path('apps_infojic_gestor_proyectos_tickets')}}" class="{% if app.request.attributes.get('_route') == 'apps_infojic_gestor_proyectos_tickets' %}active{% endif %}">
+                                                <i class="fa fa-ticket"></i> 
+                                                <span>TICKETS</span>
+                                            </a>
+                                        </li>                               
+                                        <li>
+                                            <a href="" class="{% if app.request.attributes.get('_route') == 'ip_backend_mapa' %}active{% endif %}">
+                                                {#<i class="fa fa-4x fa-sign-out"></i> #}
+                                                <img src="{{ asset('public/img/iconos/icono-logout.png') }}">
+                                                <span>LOGOUT</span>
+                                            </a>
+                                        </li>
+                                        {% endblock %}
+                                        <li><br /><br /></li>
+                                        <li>
+                                            <a href="#">
+                                                <img src="{{ asset('public/img/iconos/icono-logout.png') }}">
+                                                <span>EXIT APP</span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                    <!-- sidebar menu end-->
+                                </div>
+                            </aside>
+                            <!--sidebar end-->
+                        {% endblock %}
+
+                        {% block main_content %}
+                            <!-- **********************************************************************************************************************************************************
+                            MAIN CONTENT
+                            *********************************************************************************************************************************************************** -->
+                            <!--main content start-->
+                            <section id="main-content">
+                                <section class="wrapper">
+                                    {% block Titol %}
+                                    {% endblock %}
+                                    {% block wrapper %}
+                                        <div class="row">
+                                            <div class="col-lg-9 main-chart">
+
+                                                <div class="row mtbox">
+                                                    <div class="col-md-2 col-sm-2 col-md-offset-1 box0">
+                                                        <div class="box1">
+                                                            <span class="li_heart"></span>
+                                                            <h3>933</h3>
+                                                        </div>
+                                                        <p>933 People liked your page the last 24hs. Whoohoo!</p>
+                                                    </div>
+                                                    <div class="col-md-2 col-sm-2 box0">
+                                                        <div class="box1">
+                                                            <span class="li_cloud"></span>
+                                                            <h3>+48</h3>
+                                                        </div>
+                                                        <p>48 New files were added in your cloud storage.</p>
+                                                    </div>
+                                                    <div class="col-md-2 col-sm-2 box0">
+                                                        <div class="box1">
+                                                            <span class="li_stack"></span>
+                                                            <h3>23</h3>
+                                                        </div>
+                                                        <p>You have 23 unread messages in your inbox.</p>
+                                                    </div>
+                                                    <div class="col-md-2 col-sm-2 box0">
+                                                        <div class="box1">
+                                                            <span class="li_news"></span>
+                                                            <h3>+10</h3>
+                                                        </div>
+                                                        <p>More than 10 news were added in your reader.</p>
+                                                    </div>
+                                                    <div class="col-md-2 col-sm-2 box0">
+                                                        <div class="box1">
+                                                            <span class="li_data"></span>
+                                                            <h3>OK!</h3>
+                                                        </div>
+                                                        <p>Your server is working perfectly. Relax & enjoy.</p>
+                                                    </div>
+
+                                                </div><!-- /row mt -->  
+
+
+                                                <div class="row mt">
+                                                    <!-- SERVER STATUS PANELS -->
+                                                    <div class="col-md-4 col-sm-4 mb">
+                                                        <div class="white-panel pn donut-chart">
+                                                            <div class="white-header">
+                                                                <h5>SERVER LOAD</h5>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-6 col-xs-6 goleft">
+                                                                    <p><i class="fa fa-database"></i> 70%</p>
+                                                                </div>
+                                                            </div>
+                                                            <canvas id="serverstatus01" height="120" width="120"></canvas>
+                                                            <script>
+                                                                var doughnutData = [
+                                                                    {
+                                                                        value: 70,
+                                                                        color: "#68dff0"
+                                                                    },
+                                                                    {
+                                                                        value: 30,
+                                                                        color: "#fdfdfd"
+                                                                    }
+                                                                ];
+                                                                var myDoughnut = new Chart(document.getElementById("serverstatus01").getContext("2d")).Doughnut(doughnutData);
+                                                            </script>
+                                                        </div><! --/grey-panel -->
+                                                    </div><!-- /col-md-4-->
+
+
+                                                    <div class="col-md-4 col-sm-4 mb">
+                                                        <div class="white-panel pn">
+                                                            <div class="white-header">
+                                                                <h5>TOP PRODUCT</h5>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-6 col-xs-6 goleft">
+                                                                    <p><i class="fa fa-heart"></i> 122</p>
+                                                                </div>
+                                                                <div class="col-sm-6 col-xs-6"></div>
+                                                            </div>
+                                                            <div class="centered">
+                                                                <img src="{{ asset('assets/img/product.png ') }}" width="120">
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- /col-md-4 -->
+
+                                                    <div class="col-md-4 mb">
+                                                        <!-- WHITE PANEL - TOP USER -->
+                                                        <div class="white-panel pn">
+                                                            <div class="white-header">
+                                                                <h5>TOP USER</h5>
+                                                            </div>
+                                                            <p><img src="{{ asset('assets/img/ui-zac.jpg ') }}" class="img-circle" width="80"></p>
+                                                            <p><b>Zac Snider</b></p>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <p class="small mt">MEMBER SINCE</p>
+                                                                    <p>2012</p>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <p class="small mt">TOTAL SPEND</p>
+                                                                    <p>$ 47,60</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- /col-md-4 -->
+
+
+                                                </div><!-- /row -->
+
+
+                                                <div class="row">
+                                                    <!-- TWITTER PANEL -->
+                                                    <div class="col-md-4 mb">
+                                                        <div class="darkblue-panel pn">
+                                                            <div class="darkblue-header">
+                                                                <h5>DROPBOX STATICS</h5>
+                                                            </div>
+                                                            <canvas id="serverstatus02" height="120" width="120"></canvas>
+                                                            <script>
+                                                                var doughnutData = [
+                                                                    {
+                                                                        value: 60,
+                                                                        color: "#68dff0"
+                                                                    },
+                                                                    {
+                                                                        value: 40,
+                                                                        color: "#444c57"
+                                                                    }
+                                                                ];
+                                                                var myDoughnut = new Chart(document.getElementById("serverstatus02").getContext("2d")).Doughnut(doughnutData);
+                                                            </script>
+                                                            <p>April 17, 2014</p>
+                                                            <footer>
+                                                                <div class="pull-left">
+                                                                    <h5><i class="fa fa-hdd-o"></i> 17 GB</h5>
+                                                                </div>
+                                                                <div class="pull-right">
+                                                                    <h5>60% Used</h5>
+                                                                </div>
+                                                            </footer>
+                                                        </div><! -- /darkblue panel -->
+                                                    </div><!-- /col-md-4 -->
+
+
+                                                    <div class="col-md-4 mb">
+                                                        <!-- INSTAGRAM PANEL -->
+                                                        <div class="instagram-panel pn">
+                                                            <i class="fa fa-instagram fa-4x"></i>
+                                                            <p>@THISISYOU<br/>
+                                                                5 min. ago
+                                                            </p>
+                                                            <p><i class="fa fa-comment"></i> 18 | <i class="fa fa-heart"></i> 49</p>
+                                                        </div>
+                                                    </div><!-- /col-md-4 -->
+
+                                                    <div class="col-md-4 col-sm-4 mb">
+                                                        <!-- REVENUE PANEL -->
+                                                        <div class="darkblue-panel pn">
+                                                            <div class="darkblue-header">
+                                                                <h5>REVENUE</h5>
+                                                            </div>
+                                                            <div class="chart mt">
+                                                                <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data="[200,135,667,333,526,996,564,123,890,464,655]"></div>
+                                                            </div>
+                                                            <p class="mt"><b>$ 17,980</b><br/>Month Income</p>
+                                                        </div>
+                                                    </div><!-- /col-md-4 -->
+
+                                                </div><!-- /row -->
+
+                                                <div class="row mt">
+                                                    <!--CUSTOM CHART START -->
+                                                    <div class="border-head">
+                                                        <h3>VISITS</h3>
+                                                    </div>
+                                                    <div class="custom-bar-chart">
+                                                        <ul class="y-axis">
+                                                            <li><span>10.000</span></li>
+                                                            <li><span>8.000</span></li>
+                                                            <li><span>6.000</span></li>
+                                                            <li><span>4.000</span></li>
+                                                            <li><span>2.000</span></li>
+                                                            <li><span>0</span></li>
+                                                        </ul>
+                                                        <div class="bar">
+                                                            <div class="title">JAN</div>
+                                                            <div class="value tooltips" data-original-title="8.500" data-toggle="tooltip" data-placement="top">85%</div>
+                                                        </div>
+                                                        <div class="bar ">
+                                                            <div class="title">FEB</div>
+                                                            <div class="value tooltips" data-original-title="5.000" data-toggle="tooltip" data-placement="top">50%</div>
+                                                        </div>
+                                                        <div class="bar ">
+                                                            <div class="title">MAR</div>
+                                                            <div class="value tooltips" data-original-title="6.000" data-toggle="tooltip" data-placement="top">60%</div>
+                                                        </div>
+                                                        <div class="bar ">
+                                                            <div class="title">APR</div>
+                                                            <div class="value tooltips" data-original-title="4.500" data-toggle="tooltip" data-placement="top">45%</div>
+                                                        </div>
+                                                        <div class="bar">
+                                                            <div class="title">MAY</div>
+                                                            <div class="value tooltips" data-original-title="3.200" data-toggle="tooltip" data-placement="top">32%</div>
+                                                        </div>
+                                                        <div class="bar ">
+                                                            <div class="title">JUN</div>
+                                                            <div class="value tooltips" data-original-title="6.200" data-toggle="tooltip" data-placement="top">62%</div>
+                                                        </div>
+                                                        <div class="bar">
+                                                            <div class="title">JUL</div>
+                                                            <div class="value tooltips" data-original-title="7.500" data-toggle="tooltip" data-placement="top">75%</div>
+                                                        </div>
+                                                    </div>
+                                                    <!--custom chart end-->
+                                                </div><!-- /row --> 
+
+                                            </div><!-- /col-lg-9 END SECTION MIDDLE -->
+
+
+                                            <!-- **********************************************************************************************************************************************************
+                                            RIGHT SIDEBAR CONTENT
+                                            *********************************************************************************************************************************************************** -->                  
+
+                                            <div class="col-lg-3 ds">
+                                                <!--COMPLETED ACTIONS DONUTS CHART-->
+                                                <h3>NOTIFICATIONS</h3>
+
+                                                <!-- First Action -->
+                                                <div class="desc">
+                                                    <div class="thumb">
+                                                        <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                                                    </div>
+                                                    <div class="details">
+                                                        <p><muted>2 Minutes Ago</muted><br/>
+                                                        <a href="#">James Brown</a> subscribed to your newsletter.<br/>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <!-- Second Action -->
+                                                <div class="desc">
+                                                    <div class="thumb">
+                                                        <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                                                    </div>
+                                                    <div class="details">
+                                                        <p><muted>3 Hours Ago</muted><br/>
+                                                        <a href="#">Diana Kennedy</a> purchased a year subscription.<br/>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <!-- Third Action -->
+                                                <div class="desc">
+                                                    <div class="thumb">
+                                                        <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                                                    </div>
+                                                    <div class="details">
+                                                        <p><muted>7 Hours Ago</muted><br/>
+                                                        <a href="#">Brandon Page</a> purchased a year subscription.<br/>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <!-- Fourth Action -->
+                                                <div class="desc">
+                                                    <div class="thumb">
+                                                        <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                                                    </div>
+                                                    <div class="details">
+                                                        <p><muted>11 Hours Ago</muted><br/>
+                                                        <a href="#">Mark Twain</a> commented your post.<br/>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <!-- Fifth Action -->
+                                                <div class="desc">
+                                                    <div class="thumb">
+                                                        <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                                                    </div>
+                                                    <div class="details">
+                                                        <p><muted>18 Hours Ago</muted><br/>
+                                                        <a href="#">Daniel Pratt</a> purchased a wallet in your store.<br/>
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <!-- USERS ONLINE SECTION -->
+                                                <h3>TEAM MEMBERS</h3>
+                                                <!-- First Member -->
+                                                <div class="desc">
+                                                    <div class="thumb">
+                                                        <img class="img-circle" src="{{ asset('assets/img/ui-divya.jpg') }}" width="35px" height="35px" align="">
+                                                    </div>
+                                                    <div class="details">
+                                                        <p><a href="#">DIVYA MANIAN</a><br/>
+                                                        <muted>Available</muted>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <!-- Second Member -->
+                                                <div class="desc">
+                                                    <div class="thumb">
+                                                        <img class="img-circle" src="{{ asset('assets/img/ui-sherman.jpg ') }}" width="35px" height="35px" align="">
+                                                    </div>
+                                                    <div class="details">
+                                                        <p><a href="#">DJ SHERMAN</a><br/>
+                                                        <muted>I am Busy</muted>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <!-- Third Member -->
+                                                <div class="desc">
+                                                    <div class="thumb">
+                                                        <img class="img-circle" src="{{ asset('assets/img/ui-danro.jpg ') }}" width="35px" height="35px" align="">
+                                                    </div>
+                                                    <div class="details">
+                                                        <p><a href="#">DAN ROGERS</a><br/>
+                                                        <muted>Available</muted>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <!-- Fourth Member -->
+                                                <div class="desc">
+                                                    <div class="thumb">
+                                                        <img class="img-circle" src="{{ asset('assets/img/ui-zac.jpg ') }}" width="35px" height="35px" align="">
+                                                    </div>
+                                                    <div class="details">
+                                                        <p><a href="#">Zac Sniders</a><br/>
+                                                        <muted>Available</muted>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <!-- Fifth Member -->
+                                                <div class="desc">
+                                                    <div class="thumb">
+                                                        <img class="img-circle" src="{{ asset('assets/img/ui-sam.jpg ') }}" width="35px" height="35px" align="">
+                                                    </div>
+                                                    <div class="details">
+                                                        <p><a href="#">Marcel Newman</a><br/>
+                                                        <muted>Available</muted>
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <!-- CALENDAR-->
+                                                <div id="calendar" class="mb">
+                                                    <div class="panel green-panel no-margin">
+                                                        <div class="panel-body">
+                                                            <div id="date-popover" class="popover top" style="cursor: pointer; disadding: block; margin-left: 33%; margin-top: -50px; width: 175px;">
+                                                                <div class="arrow"></div>
+                                                                <h3 class="popover-title" style="disadding: none;"></h3>
+                                                                <div id="date-popover-content" class="popover-content"></div>
+                                                            </div>
+                                                            <div id="my-calendar"></div>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- / calendar -->
+
+                                            </div><!-- /col-lg-3 -->
+                                        </div><! --/row -->
+
+
+                                    {% endblock %}
+                                    {% block redirect_menu %}
+                                    {% endblock %}
+
+                                </section>
+                            </section>
+
+                            <!--main content end-->
+                        {% endblock %}
+                    </div>
+                </section>
+
+            </div>
+            {% block footer %}
+                <!--footer start-->
+                <footer id="footer" class="site-footer">
+                    <div class="text-center ml">
+                        2017 - Nejo Push
+                        <a href="#" class="go-top">
+                            <i class="fa fa-angle-up"></i>
+                        </a>
+                    </div>
+                </footer>
+                <!--footer end-->
+            {% endblock %}
+
+        {% endblock %}
+        {% block javascripts %}
+            <script>
+            	let isSubscribed = false;
+            	let swRegistration = null;
+
+            	var endpoint = "";
+				var key = "";
+				var auth = "";
+
+            	const applicationServerPublicKey = "{{vapid_public_key}}";
+
+            	if ('serviceWorker' in navigator) {
+
+                      navigator.serviceWorker.register('{{asset("service-worker.js")}}').then(function(registration) {
+                        setInterval(function(){update = registration.update();if (update) {console.log('Service Worker Actualizado correctamente');}},15000);
+                         if ('pushManager' in registration) {
+                            swRegistration = registration;
+            				// unsubscribeUser();
+                         initialiseUI();
+
+                         const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
+
+                         swRegistration.pushManager.subscribe({
+                           userVisibleOnly: true,
+                           applicationServerKey: applicationServerKey
+                       })
+                         .then(function(subscription) {
+                           updateSubscriptionOnServer(subscriptionJSON);
+
+                           isSubscribed = true;
+                       })
+                         .catch(function(err) {
+                           console.log('Failed to subscribe the user: ', err);
+                       });
+                     } else {
+                         console.log('The service worker doesn\'t support push');
+                     }
+                     console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                     }).catch(function(err) {
+    	                  //registration failed :(
+    	                  console.log('ServiceWorker registration failed: ', err);
+    	              });
+            }else {
+              console.log('No service-worker on this browser');
+          }
+
+    //         	if ('serviceWorker' in navigator && 'PushManager' in window) {
+				//   console.log('Service Worker and Push is supported');
+
+				//   navigator.serviceWorker.register('{{asset("service-worker.js")}}')
+				//   .then(function(swReg) {
+				//     console.log('Service Worker is registered', swReg);
+
+				//     swRegistration = swReg;
+				//     initialiseUI();
+				//   })
+				//   .catch(function(error) {
+				//     console.error('Service Worker Error', error);
+				//   });
+				// } else {
+				//   console.warn('Push messaging is not supported');
+				//   pushButton.textContent = 'Push Not Supported';
+				// }
+
+            	function urlB64ToUint8Array(base64String) {
+            		const padding = '='.repeat((4 - base64String.length % 4) % 4);
+            		const base64 = (base64String + padding)
+            		.replace(/\-/g, '+')
+            		.replace(/_/g, '/');
+
+            		const rawData = window.atob(base64);
+            		const outputArray = new Uint8Array(rawData.length);
+
+            		for (let i = 0; i < rawData.length; ++i) {
+            			outputArray[i] = rawData.charCodeAt(i);
+            		}
+            		return outputArray;
+            	}
+
+				function initialiseUI() {
+				  // Set the initial subscription value
+				  swRegistration.pushManager.getSubscription()
+				  .then(function(subscription) {
+				  	isSubscribed = !(subscription === null);
+
+				  	updateSubscriptionOnServer(subscription);
+
+				  	if (isSubscribed) {
+				  		console.log('User IS subscribed.');
+				  	} else {
+				  		console.log('User is NOT subscribed.');
+				  	}
+				  });
+				}
+
+				function updateSubscriptionOnServer(subscription) {
+				    path = "{{path('register_notification_user')}}";
+                    token = "{{app.session.get('jwt')}}";
+
+                    subscriptionString = JSON.stringify(subscription);
+                    subscriptionJSON = JSON.parse(subscriptionString);
+
+                    endpoint = subscriptionJSON.endpoint;
+                    key = subscriptionJSON.keys.p256dh;
+                    auth = subscriptionJSON.keys.auth;
+
+                    $.ajax({
+                        url: path,
+                        async: true,
+                        data: {'endpoint':endpoint, 'publicKey':key, 'auth':auth},
+                        type: 'POST',
+                        beforeSend: function(request) {
+                            request.setRequestHeader("token", token);
+                        },
+                    });
+				  return false;
+				}
+
+				function unsubscribeUser() {
+				  swRegistration.pushManager.getSubscription()
+				  .then(function(subscription) {
+				    if (subscription) {
+				      return subscription.unsubscribe();
+				    }
+				  })
+				  .catch(function(error) {
+				    console.log('Error unsubscribing', error);
+				  })
+				  .then(function() {
+				    updateSubscriptionOnServer(null);
+
+				    console.log('User is unsubscribed.');
+				    isSubscribed = false;
+				  });
+				}
+				
+            </script>      
+            <!-- js placed at the end of the document so the pages load faster -->
+            <script src="{{ asset('assets/js/bootstrap.min.js' )}}"></script>
+            <script class="include" type="text/javascript" src="{{ asset('assets/js/jquery.dcjqaccordion.2.7.js' )}}"></script>
+            <script src="{{ asset('assets/js/jquery.scrollTo.min.js' )}}"></script>
+            <script src="{{ asset('assets/js/jquery.nicescroll.js' )}}" type="text/javascript"></script>
+            <script src="{{ asset('assets/js/jquery.sparkline.js' )}}"></script>
+
+
+            <!--common script for all pages-->
+            <script src="{{ asset('assets/js/common-scripts.js' )}}"></script>
+
+            {# // <script type="text/javascript" src="{{ asset('assets/js/gritter/js/jquery.gritter.js' )}}"></script>  #}
+            {# // <script type="text/javascript" src="{{ asset('assets/js/gritter-conf.js' )}}"></script>  #}
+
+            <!--script for this page-->
+            {# // <script src="{{ asset('assets/js/sparkline-chart.js' )}}"></script>     #}
+            {# // <script src="{{ asset('assets/js/zabuto_calendar.js' )}}"></script> #}
+
+            <!--script del select2-->
+            <link href="{{ asset('assets/css/select2.min.css')}}" rel="stylesheet" />
+            <script src="{{ asset('assets/js/select2.min.js')}}"></script>
+
+            <script>
+                var interval = null;
+
+                window.onload = function (){
+                    clearLastAnnotation();
+                }
+
+                function clearLastAnnotation(){
+                    interval = setInterval(function(){
+                        $(".notificacion:first-child").slideUp(function() {
+                            $(this).remove();
+                        });
+                    }, 3000);
+                }
+
+            // $(".notificacion a").click(function(){
+                $("body").on("click", ".notificacion a", function(){
+                    var padre = $(this).parent();
+                    padre.slideUp(function() {
+                        padre.remove();
+                    });
+                });
+
+                function addNotification(data){
+                    clearInterval(interval);
+                    $('#notificaciones').html($('#notificaciones').html() + data);
+                    $(".notificacion:last-child").hide();
+                    $(".notificacion:last-child").slideDown();
+                    clearLastAnnotation();
+                }
+
+                function addErrorNotification(data){
+                    clearInterval(interval);
+                    $('#notificaciones').html($('#notificaciones').html() + '<div class="alert notificacion alerta col-xs-12"> <span class="col-xs-11">'+data+'</span><a><i class="rounded fa fa-times" aria-hidden="true"></i></a></div>');
+                    $(".notificacion:last-child").hide();
+                    $(".notificacion:last-child").slideDown();
+                    clearLastAnnotation();
+                }
+
+                function addSuccessNotification(data){
+                    clearInterval(interval);
+                    $('#notificaciones').html($('#notificaciones').html() + '<div class="alert notificacion completado col-xs-12"> <span class="col-xs-11">'+data+'</span><a><i class="rounded fa fa-times" aria-hidden="true"></i></a></div>');
+                    $(".notificacion:last-child").hide();
+                    $(".notificacion:last-child").slideDown();
+                    clearLastAnnotation();
+                }
+            </script>
+        {% endblock %}
+
+    {% block javascriptsAdcionales %}
+        
+    {% endblock %}
+</body>
+{% endblock %}
 </html>
