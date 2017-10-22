@@ -680,6 +680,8 @@
 				    path = "{{path('register_notification_user')}}";
                     token = "{{app.session.get('jwt')}}";
 
+                    console.log(subscription);
+
                     subscriptionString = JSON.stringify(subscription);
                     subscriptionJSON = JSON.parse(subscriptionString);
 

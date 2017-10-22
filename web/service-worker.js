@@ -24,56 +24,58 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('push', function(event) {
-	console.log(event.data.json());
+	console.log(event);
 
-	data = event.data.json();
+	// data = event.data.json();
 
-	const title = data.title;
-	const options = {
-		body: data.msg,
-		icon: data.icon,
-		badge: data.badge,
-		// image: data.image,
-		//vibrate: [300, 100, 100, 300],
-		actions: [
-			{
-				action: 'go-to-service-action',
-				title: 'Asignar a los mensajeros',
-				icon: data.assign
-			},
-			{
-				action: 'cancel-service-action',
-				title: 'Cancelar',
-				icon: data.cancel
-			},
-		],
-		silent: true,
-		renotify: true,
-		tag: 'go-to-service-action',
-	};
+	 const title = 'TITLE';
+	// const options = {
+	// 	body: data.msg,
+	// 	icon: data.icon,
+	// 	badge: data.badge,
+	// 	// image: data.image,
+	// 	//vibrate: [300, 100, 100, 300],
+	// 	actions: [
+	// 		{
+	// 			action: 'go-to-service-action',
+	// 			title: 'Asignar a los mensajeros',
+	// 			icon: data.assign
+	// 		},
+	// 		{
+	// 			action: 'cancel-service-action',
+	// 			title: 'Cancelar',
+	// 			icon: data.cancel
+	// 		},
+	// 	],
+	// 	silent: true,
+	// 	renotify: true,
+	// 	tag: 'go-to-service-action',
+	// };
+
+	options = {};
 	
-	self.addEventListener('notificationclick', function(event) {
-		if (!event.action) {
-			clients.openWindow(appUrl);
-			event.notification.close();
-			return;
-		}
+	// self.addEventListener('notificationclick', function(event) {
+	// 	if (!event.action) {
+	// 		clients.openWindow(appUrl);
+	// 		event.notification.close();
+	// 		return;
+	// 	}
 		
-		appUrl = data.image;
+	// 	appUrl = data.image;
 
-		switch (event.action) {
-			case 'go-to-service-action':
-			clients.openWindow(appUrl);
-			break;
-			case 'cancel-service-action':
-			break;
-			default:
-			clients.openWindow(appUrl);
-			break;
-		}
+	// 	switch (event.action) {
+	// 		case 'go-to-service-action':
+	// 		clients.openWindow(appUrl);
+	// 		break;
+	// 		case 'cancel-service-action':
+	// 		break;
+	// 		default:
+	// 		clients.openWindow(appUrl);
+	// 		break;
+	// 	}
 		
-		event.notification.close();
-	});
+	// 	event.notification.close();
+	// });
 
 	const notificationPromise = self.registration.showNotification(title, options);
 	event.waitUntil(notificationPromise).then(function(){
