@@ -39,14 +39,14 @@ class WebNotification
     /**
      * @var string
      *
-     * @ORM\Column(name="auth", type="string", length=255)
+     * @ORM\Column(name="auth", type="text")
      */
     private $auth;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="public_key", type="string", length=255)
+     * @ORM\Column(name="public_key", type="text")
      */
     private $publicKey;
 

@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Push\ToolboxBundle\PushToolboxBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Push\EntityBundle\PushEntityBundle(),
+            new Minishlink\Bundle\WebPushBundle\MinishlinkWebPushBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

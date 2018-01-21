@@ -39,8 +39,9 @@ twig:
     strict_variables: '%kernel.debug%'
     cache: false
     globals:
-        colorPrincial: "#e78e0e"
+        colorPrincial: "#ff0052"
         vapid_public_key: "%vapid_public_key%"
+        push_api_key: "%push_api_key%"
 
 # Doctrine Configuration
 doctrine:
@@ -83,3 +84,18 @@ fos_rest:
         #exception_wrapper_handler: IP\RestBundle\Handler\FosExceptionWrapperHandler
     exception:
         enabled: false
+
+minishlink_web_push:
+    api_keys:                       # you should put api keys in your "app/config/parameters.yml" file
+        GCM: 'AIzaSyAaU1CvybsVJ0OUEOQ0EJHF72vGSlWht00'
+    VAPID:
+        subject: http://localhost/git/pushNotification/web/ # can be an URL or a mailto:
+        publicKey: BG-mevRODxstsFoBcmsESt1_2wP5WEtxCUb8uPCC4nkIIl4Dj1RPLgzWsx1zQp75YqGFuJUyJdwNVJgSD2REQE4          # uncompressed public key P-256 encoded in Base64-URL
+        privateKey: zquOfxk1R9-0EI17PVFHIHwESjsEMSREduC_2vu2R3k         # the secret multiplier of the private key encoded in Base64-URL
+        pemFile: ''          # if you have a PEM file and can link to it on your filesystem
+        pem: ''           # if you have a PEM file and want to hardcode its content
+    ttl: 2419200                    # Time to Live of notifications in seconds
+    urgency: normal                      # can be very-low / low / normal / high
+    topic: ~                        # default identifier for your notifications
+    timeout: 30                     # Timeout of each request in seconds
+    automatic_padding: true         # pad messages automatically for better security (against more bandwith usage)

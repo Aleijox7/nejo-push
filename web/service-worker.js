@@ -23,87 +23,144 @@ self.addEventListener('install', function(event) {
   self.skipWaiting();
 });
 
+
 self.addEventListener('push', function(event) {
-	console.log(event);
+try {
+	var jsonData = event.data.text();
+	var objectData = JSON.parse(jsonData);
 
-	// data = event.data.json();
+	options = objectData;
+	console.log(options);
+	// options['body'] = body;
+	if (objectData['title'] != null) {
+		title = objectData['title'];
+	} else {
+		title = "DEFAULT TITLE";
+	}
 
-	 const title = 'TITLE';
-	// const options = {
-	// 	body: data.msg,
-	// 	icon: data.icon,
-	// 	badge: data.badge,
-	// 	// image: data.image,
-	// 	//vibrate: [300, 100, 100, 300],
-	// 	actions: [
-	// 		{
-	// 			action: 'go-to-service-action',
-	// 			title: 'Asignar a los mensajeros',
-	// 			icon: data.assign
-	// 		},
-	// 		{
-	// 			action: 'cancel-service-action',
-	// 			title: 'Cancelar',
-	// 			icon: data.cancel
-	// 		},
-	// 	],
-	// 	silent: true,
-	// 	renotify: true,
-	// 	tag: 'go-to-service-action',
-	// };
-
-	options = {};
-	
-	// self.addEventListener('notificationclick', function(event) {
-	// 	if (!event.action) {
-	// 		clients.openWindow(appUrl);
-	// 		event.notification.close();
-	// 		return;
-	// 	}
-		
-	// 	appUrl = data.image;
-
-	// 	switch (event.action) {
-	// 		case 'go-to-service-action':
-	// 		clients.openWindow(appUrl);
-	// 		break;
-	// 		case 'cancel-service-action':
-	// 		break;
-	// 		default:
-	// 		clients.openWindow(appUrl);
-	// 		break;
-	// 	}
-		
-	// 	event.notification.close();
-	// });
-
-	const notificationPromise = self.registration.showNotification(title, options);
-	event.waitUntil(notificationPromise).then(function(){
-	self.addEventListener('notificationclick', function(event) {
-		if (!event.action) {
-			clients.openWindow(appUrl);
-			event.notification.close();
-			return;
-		}
-		
-		appUrl = data.image;
-
-		switch (event.action) {
-			case 'go-to-service-action':
-			clients.openWindow(appUrl);
-			event.notification.close();
-			break;
-			case 'cancel-service-action':
-			event.notification.close();
-			break;
-			default:
-			console.log(`Unknown action clicked: '${event.action}'`);
-			clients.openWindow(appUrl);
-			event.notification.close();
-			break;
-		}
-		
-		event.notification.close();
-	});
-	});
+	event.waitUntil(
+	self.registration.showNotification(title, options)
+	  );
+} catch(e) {
+}	
 });
+
+self.addEventListener('notificationclick', function(event) {
+	if (!event.action) {
+		event.notification.close();
+		return;
+	}
+
+	actions = event.currentTarget.options.actions;
+	switch (event.action) {
+		case 'cancel-service-action':
+		break;
+		case 'go-to-service-action':
+		for (var i = actions.length - 1; i >= 0; i--) {
+			if (actions[i].action == event.action) {
+				url = actions[i].url;
+				clients.openWindow(url);
+			}
+		}
+		break;
+		default:
+		for (var i = actions.length - 1; i >= 0; i--) {
+			if (actions[i].action == event.action) {
+				url = actions[i].url;
+				clients.openWindow(url);
+			}
+		}
+		break;
+	}
+
+	event.notification.close();
+});
+
+
+
+// self.addEventListener('push', function(event) {
+
+
+// 	// data = event.data.json();
+
+// 	console.log(event);
+// 	return true;
+// 	// return true;
+
+// 	const title = 'TEST';
+// 	const options = {
+// 		body: 'TEST',
+// 		// icon: data.icon,
+// 		// badge: data.badge,
+// 		// image: data.image,
+// 		//vibrate: [300, 100, 100, 300],
+		// actions: [
+		// 	{
+		// 		action: 'go-to-service-action',
+		// 		title: 'Asignar a los mensajeros',
+		// 		// icon: data.assign
+		// 	},
+		// 	{
+		// 		action: 'cancel-service-action',
+		// 		title: 'Cancelar',
+		// 		// icon: data.cancel
+		// 	},
+		// ],
+		// silent: true,
+		// renotify: true,
+		// tag: 'go-to-service-action',
+// 	};
+	
+// 	self.addEventListener('notificationclick', function(event) {
+// 		if (!event.action) {
+// 			// clients.openWindow(appUrl);
+// 			event.notification.close();
+// 			return;
+// 		}
+		
+// 		// appUrl = data.image;
+
+// 		switch (event.action) {
+// 			case 'go-to-service-action':
+// 			// clients.openWindow(appUrl);
+// 			break;
+// 			case 'cancel-service-action':
+// 			break;
+// 			default:
+// 			// clients.openWindow(appUrl);
+// 			break;
+// 		}
+		
+// 		event.notification.close();
+// 	});
+
+// 	const notificationPromise = self.registration.showNotification(title, options);
+// 	event.waitUntil(notificationPromise).then(function(){
+// 	self.addEventListener('notificationclick', function(event) {
+// 		if (!event.action) {
+// 			clients.openWindow(appUrl);
+// 			event.notification.close();
+// 			return;
+// 		}
+		
+// 		appUrl = data.image;
+
+// 		switch (event.action) {
+// 			case 'go-to-service-action':
+// 			clients.openWindow(appUrl);
+// 			event.notification.close();
+// 			break;
+// 			case 'cancel-service-action':
+// 			event.notification.close();
+// 			break;
+// 			default:
+// 			console.log(`Unknown action clicked: '${event.action}'`);
+// 			clients.openWindow(appUrl);
+// 			event.notification.close();
+// 			break;
+// 		}
+		
+// 		event.notification.close();
+// 	});
+// 	});
+// });

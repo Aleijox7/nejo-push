@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e5780db485954adac30c8bbcc3e066bd",
+    "content-hash": "617c6e51f5e67aaf6aae63018141cff2",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -1684,6 +1684,55 @@
                 "web"
             ],
             "time": "2017-06-28T19:03:40+00:00"
+        },
+        {
+            "name": "minishlink/web-push-bundle",
+            "version": "v1.4",
+            "target-dir": "Minishlink/Bundle/WebPushBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Minishlink/web-push-bundle.git",
+                "reference": "6a05b6aeb3d7d2d26d7cec2d75b5b7278d4490e1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Minishlink/web-push-bundle/zipball/6a05b6aeb3d7d2d26d7cec2d75b5b7278d4490e1",
+                "reference": "6a05b6aeb3d7d2d26d7cec2d75b5b7278d4490e1",
+                "shasum": ""
+            },
+            "require": {
+                "minishlink/web-push": "~1.4.0",
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "symfony/framework-bundle": "^2.7"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Minishlink\\Bundle\\WebPushBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Louis Lagrange",
+                    "email": "lagrange.louis@gmail.com",
+                    "homepage": "https://github.com/Minishlink"
+                }
+            ],
+            "description": "Symfony Bundle around the WebPush library",
+            "homepage": "https://github.com/minishlink/web-push-bundle",
+            "keywords": [
+                "WebPush",
+                "notifications",
+                "push",
+                "web"
+            ],
+            "time": "2017-02-16T21:31:15+00:00"
         },
         {
             "name": "monolog/monolog",

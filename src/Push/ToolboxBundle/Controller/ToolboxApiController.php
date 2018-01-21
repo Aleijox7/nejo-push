@@ -130,11 +130,11 @@ class ToolboxApiController extends FOSRestController
 
     // dump($this->sendNotification('✅ SUCCESS',$idUser));
     // dump($this->sendNotification('ERROR ❌',$idUser));
-		dump($this->sendNotificationAction('✅ ❌ ✅ ❌ ✅ ❌ ✅ ❌ ✅ ❌ ✅ ❌ ✅ ❌ ✅ ❌',$idUser));
+		dump($this->sendNotificationAction('✅ ❌ ✅ ❌ ✅ ❌ ✅ ❌ ✅ ❌ ✅ ❌ ✅ ❌ ✅ ❌',$idUser, $this->container));
 		exit();
 	}
 
-	public function sendNotificationAction($pushmessage, $idUser, $service_id=0, $id=0) {
+	public function sendNotificationAction($pushmessage, $idUser, $container) {
     $API_ACCESS_KEY = $container->getParameter('push_api_key');
     
     $view = View::create();
@@ -142,7 +142,7 @@ class ToolboxApiController extends FOSRestController
 
         $pushdevices = array();
 
-        $tokenUser = $em->getRepository('AppsInfojicEntityBundle:IaTokenUser')->findOneBy(array('user' => $idUser));
+        $tokenUser = $em->getRepository('PushEntityBundle:UserToken')->findOneBy(array('user' => $idUser));
 
         if ($tokenUser == NULL) {
         	return false;
@@ -162,7 +162,7 @@ class ToolboxApiController extends FOSRestController
             $msg = array
             (
                 'body' 	=> $pushmessage,
-        				'title'	=> 'RBD APP',
+        				'title'	=> 'NEJO PUSH',
         				'icon'	=> 'myicon',
               	'sound' => 'mySound'
             );

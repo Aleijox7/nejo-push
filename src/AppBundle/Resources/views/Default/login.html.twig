@@ -4,10 +4,10 @@
 {% block wrapper %}
 	<div class="col-xs-12 col-sm-8 col-sm-offset-1">
 		<h1>LOGIN</h1>
-		<form method="POST" action="{{path('login')}}">
-			<input type="text" name="username" placeholder="Username" class="form-control" style="margin:2px;">
-			<input type="password" name="password" placeholder="*******" class="form-control" style="margin:2px;">
-			<input type="submit" name="submit" value="Login" class="btn btn-success" style="margin:2px;">
+		<form id="formLogin" method="POST" action="{{path('login')}}">
+			<input type="text" name="username" placeholder="Username" class="form-control" style="margin:12px;">
+			<input type="password" name="password" placeholder="*******" class="form-control" style="margin:12px;">
+			<button type="submit" class="btn-submit" name="submit"><a type="submit" class="btn-gradient"><span>Login</span></a></button>
 		</form>
 	</div>
 {% endblock %}

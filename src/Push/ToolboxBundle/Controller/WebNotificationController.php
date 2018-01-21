@@ -127,13 +127,50 @@ class WebNotificationController extends FOSRestController
 
 		$notifications = array();
 
-		$webNotifications = $em->getRepository('PushEntityBundle:WebNotification')->findByUser($tokenValidate['results']['user']['id']);
+		$idUser = $tokenValidate['results']['user']['id'];
+
+		$requestIdUser = $request->request->get('id');
+
+		if ($requestIdUser != NULL && is_numeric($requestIdUser)) {
+			$idUser = $requestIdUser;
+		}
+
+		$webNotifications = $em->getRepository('PushEntityBundle:WebNotification')->findByUser($idUser);
 
 		foreach ($webNotifications as $webNotification) {
 			$aux = array();
 
 			$aux['endpoint'] = $webNotification->getEndpoint();
-		    $aux['payload'] = '{"msg":"Nuevos servicios añadidos para asignar a los mensajeros", "title":"Aplicación RBD", "icon":"https://rimdevblog.files.wordpress.com/2015/04/push-button.png","badge":"https://rimdevblog.files.wordpress.com/2015/04/push-button.png", "image":"https://rimdevblog.files.wordpress.com/2015/04/push-button.png", "cancel":"https://rimdevblog.files.wordpress.com/2015/04/push-button.png"}';
+		    // $aux['payload'] = 'TEST';
+		    $payload = array();
+		    $payload['body'] = "¡Trailer de la nueva temporada de Sense8!";
+		    $payload['title'] = "Netflix";
+		    $payload['badge'] = $this->container->getParameter('server_url')."git/pushNotification/web/public/img/push/badge.png";
+		    $payload['icon'] = $this->container->getParameter('server_url')."git/pushNotification/web/public/img/push/icon.png";
+		    $payload['image'] = $this->container->getParameter('server_url')."git/pushNotification/web/public/img/push/image.png";
+		    // $payload['silent'] = true;
+		    $payload['renotify'] = true;
+		    $payload['tag'] = 'go-to-service-action';		    
+
+		    $payload['actions'] = array();
+
+		    $actionAccept = array();
+		    $actionAccept['action'] = "go-to-service-action";
+		    $actionAccept['title'] = "Ver trailer";
+		    $actionAccept['icon'] = $this->container->getParameter('server_url')."git/pushNotification/web/public/img/push/check.png";
+		    $actionAccept['url'] = $this->container->getParameter('server_url')."git/pushNotification/web/public/img/push/reportaito-miarma.gif";
+		    // $actionAccept['url'] = $this->generateUrl('login_form');
+		    array_push($payload['actions'], $actionAccept);
+
+		    $actionCancel = array();
+		    $actionCancel['action'] = "cancel-service-action";
+		    $actionCancel['title'] = "Cancelar";
+		    $actionCancel['icon'] = $this->container->getParameter('server_url')."git/pushNotification/web/public/img/push/cancel.png";
+		    $actionCancel['url'] = $this->container->getParameter('server_url')."git/pushNotification/web/public/img/push/image-troll.jpg";
+		    // array_push($payload['actions'], $actionCancel);
+
+
+		    $aux['payload'] = json_encode($payload,true);
 		    $aux['userPublicKey'] = $webNotification->getPublicKey();
 		    $aux['userAuthToken'] = $webNotification->getAuth();
 
@@ -141,7 +178,7 @@ class WebNotificationController extends FOSRestController
 		}
 
 		$auth = array(
-		    'GCM' => 'MY_GCM_API_KEY', // deprecated and optional, it's here only for compatibility reasons
+		    'GCM' => $this->container->getParameter('push_api_key'), // deprecated and optional, it's here only for compatibility reasons
 		    'VAPID' => array(
 		        'subject' => 'mailto:aleijox_seven@hotmail.com', // can be a mailto: or your website address
 		        'publicKey' => $this->container->getParameter('vapid_public_key'), // (recommended) uncompressed public key P-256 encoded in Base64-URL
@@ -155,16 +192,15 @@ class WebNotificationController extends FOSRestController
 
 		// send multiple notifications with payload
 		foreach ($notifications as $notification) {
-			var_dump('e.e');
-		    $webPush->sendNotification(
+		    dump($webPush->sendNotification(
 		        $notification['endpoint'],
 		        $notification['payload'], // optional (defaults null)
 		        $notification['userPublicKey'], // optional (defaults null)
 		        $notification['userAuthToken'] // optional (defaults null)
-		    );
+		    ));
 		}
-		exit();
 		$webPush->flush();
+		exit();
 
 		// send one notification and flush directly
 		// $webPush->sendNotification(

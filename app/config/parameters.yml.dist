@@ -19,8 +19,8 @@ parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
 
     tokenKey: aW5mb2ppYy1sb2dpbi1zZWNyZXRrZXk=
-    push_api_key: 'AIzaSyAaU1CvybsVJ0OUEOQ0EJHF72vGSlWht00'
-    # AIzaSyAaU1CvybsVJ0OUEOQ0EJHF72vGSlWht00
-    # KEY PUSH API INFOJIC: AIzaSyBQ3W-OTNFdcVthp7DSaJP1l3WHuh5e1-w
-    vapid_public_key: BIyFrvXiMGWuJKAG8TabSxvlB290MyuhzNReFHBx6yxRkI1GEIpAO5nbNUuU4yEX6MuY7+NnTkf/1ZTzuzt5Muw=
-    vapid_private_key: rUhEdGpo+AL4YUIFsdwxQ3/ngeBzTDkOf9iHnoR8qhw=
+    push_api_key: AIzaSyAaU1CvybsVJ0OUEOQ0EJHF72vGSlWht00
+    vapid_public_key: BCB+Rf4aJ5MwAwr8fD2E8r9zXh6ZOKIXyWj5D3JSflfZC9ElJlZcgf4oWzRqvOdGrmmfIkttdKt4uHyUFGuVESA=
+    vapid_private_key: /Pz61nYSy6IpZdXcNIulRVacQfm98zwewwx6jXPeOYg=
+
+    server_url: https://e22c08c2.ngrok.io/
