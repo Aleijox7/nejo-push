@@ -1,3 +1,7 @@
+push_style:
+    resource: "@PushStyleBundle/Resources/config/routing.yml"
+    prefix:   /style/
+
 push_entity:
     resource: "@PushEntityBundle/Resources/config/routing.xml"
     prefix:   /entity/

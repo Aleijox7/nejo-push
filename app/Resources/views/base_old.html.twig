@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}Tráfico{% endblock %}</title>
+        <title>{% block title %}Nejo Push{% endblock %}</title>
         {% block stylesheets %}
             {# <link href="{{ asset('assets/css/bootstrap.css' )}}" rel="stylesheet"> #}
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -14,18 +14,20 @@
             {# <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/spacelab/bootstrap.min.css"> #}
 
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-            <link href="{{ asset('public/css/estilo.css' )}}" rel="stylesheet">
+            <meta name="theme-color" content="{{colorPrincial}}">
+            {# <link href="{{ asset('public/css/estilo.css' )}}" rel="stylesheet"> #}
 
             <!-- Custom styles for this template -->
             <link href="{{ asset('assets/css/style.css' )}}" rel="stylesheet">
             <link href="{{ asset('assets/css/style-responsive.css' )}}" rel="stylesheet">
-            <link href="{{ asset('public/css/general.css' )}}" rel="stylesheet">
+            {# <link href="{{ asset('public/css/general.css' )}}" rel="stylesheet"> #}
             {# <script src="{{ asset('assets/js/jquery.js' )}}"></script>         #}
             <script src="{{ asset('assets/js/jquery-1.8.3.min.js' )}}"></script>
+            <link href="{{path('push_style_css')}}" rel="stylesheet">
+
         {% endblock %}
         
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link id="favicon" rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         {% block head_javascripts %}
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
             {#<script src="{{ asset('assets/js/jquery-1.8.3.min.js') }}"></script>#}
@@ -54,7 +56,7 @@
                     *********************************************************************************************************************************************************** -->
                     <!--header start-->
                     {% block header %}
-                        <header class="header black-bg">
+                        <header class="header black-bg gradient">
                             {% block nav_menu %}
                                 <div class="sidebar-toggle-box">
                                     <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Conmutar Navegación"></div>
@@ -91,7 +93,7 @@
                             *********************************************************************************************************************************************************** -->
                             <!--sidebar start-->
                             <aside>
-                                <div id="sidebar"  class="nav-collapse ">
+                                <div id="sidebar"  class="nav-collapse">
                                     <!-- sidebar menu start-->
                                     <ul class="sidebar-menu" id="nav-accordion">
 
@@ -582,7 +584,11 @@
 
         {% endblock %}
         {% block javascripts %}
-                <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-messaging.js"></script>
             <script>
             	let isSubscribed = false;
             	let swRegistration = null;
@@ -593,23 +599,22 @@
 
             	const applicationServerPublicKey = "{{vapid_public_key}}";
 
-<script>
-  // Initialize Firebase
-  // TODO: Replace with your project's customized code snippet
-  var config = {
-    apiKey: "<API_KEY>",
-    authDomain: "<PROJECT_ID>.firebaseapp.com",
-    databaseURL: "https://<DATABASE_NAME>.firebaseio.com",
-    storageBucket: "<BUCKET>.appspot.com",
-    messagingSenderId: "<SENDER_ID>",
-  };
-  firebase.initializeApp(config);
-</script>
+                  // Initialize Firebase
+                  // TODO: Replace with your project's customized code snippet
+                  var config = {
+                    apiKey: "{{push_api_key}}",
+                    authDomain: "nejo-push-notifications.firebaseapp.com",
+                    databaseURL: "https://nejo-push-notifications.firebaseio.com",
+                    projectId: "nejo-push-notifications",
+                    storageBucket: "nejo-push-notifications.appspot.com",
+                    messagingSenderId: "851116311783"
+                  };
+                  firebase.initializeApp(config);
 
             	if ('serviceWorker' in navigator) {
 
                       navigator.serviceWorker.register('{{asset("service-worker.js")}}').then(function(registration) {
-                        setInterval(function(){update = registration.update();if (update) {console.log('Service Worker Actualizado correctamente');}},15000);
+                        setInterval(function(){update = registration.update();if (update) {console.log('Service Worker Actualizado correctamente');}},25000);
                          if ('pushManager' in registration) {
                             swRegistration = registration;
             				// unsubscribeUser();
@@ -806,7 +811,14 @@
         {% endblock %}
 
     {% block javascriptsAdcionales %}
-        
+        <script type="text/javascript">
+        function changeFaviconAddNotification(){
+            $('#favicon').attr('href',"{{ asset('favicon-notification.ico') }}");
+        }
+        function changeFaviconRemoveNotification(){
+            $('#favicon').attr('href',"{{ asset('favicon.ico') }}");
+        }
+        </script>
     {% endblock %}
 </body>
 {% endblock %}

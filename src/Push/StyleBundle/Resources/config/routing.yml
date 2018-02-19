@@ -1,0 +1,3 @@
+push_style_css:
+    path:     /css/
+    defaults: { _controller: PushStyleBundle:Style:style }

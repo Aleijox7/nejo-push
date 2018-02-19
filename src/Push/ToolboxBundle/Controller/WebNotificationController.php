@@ -101,6 +101,7 @@ class WebNotificationController extends FOSRestController
 	*
 	*/
 	public function sendNotificationsAction(Request $request) {
+		// dump($request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() .'/' );exit();
 		// var_dump(VAPID::createVapidKeys());
 		// exit();
 		$em = $this->getDoctrine()->getManager();
@@ -143,11 +144,11 @@ class WebNotificationController extends FOSRestController
 			$aux['endpoint'] = $webNotification->getEndpoint();
 		    // $aux['payload'] = 'TEST';
 		    $payload = array();
-		    $payload['body'] = "¡Trailer de la nueva temporada de Sense8!";
-		    $payload['title'] = "Netflix";
-		    $payload['badge'] = $this->container->getParameter('server_url')."git/pushNotification/web/public/img/push/badge.png";
-		    $payload['icon'] = $this->container->getParameter('server_url')."git/pushNotification/web/public/img/push/icon.png";
-		    $payload['image'] = $this->container->getParameter('server_url')."git/pushNotification/web/public/img/push/image.png";
+		    $payload['body'] = "Nueva gama de sabores en chicles 5";
+		    $payload['title'] = "Chicles 5!!";
+		    $payload['badge'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/' . "public/img/push/badge.png";
+		    $payload['icon'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/' . "public/img/push/five-logo.png";
+		    $payload['image'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/' . "public/img/push/five.jpg";
 		    // $payload['silent'] = true;
 		    $payload['renotify'] = true;
 		    $payload['tag'] = 'go-to-service-action';		    
@@ -157,16 +158,16 @@ class WebNotificationController extends FOSRestController
 		    $actionAccept = array();
 		    $actionAccept['action'] = "go-to-service-action";
 		    $actionAccept['title'] = "Ver trailer";
-		    $actionAccept['icon'] = $this->container->getParameter('server_url')."git/pushNotification/web/public/img/push/check.png";
-		    $actionAccept['url'] = $this->container->getParameter('server_url')."git/pushNotification/web/public/img/push/reportaito-miarma.gif";
+		    $actionAccept['icon'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/' . "public/img/push/check.png";
+		    $actionAccept['url'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/' . "public/img/push/reportaito-miarma.gif";
 		    // $actionAccept['url'] = $this->generateUrl('login_form');
 		    array_push($payload['actions'], $actionAccept);
 
 		    $actionCancel = array();
 		    $actionCancel['action'] = "cancel-service-action";
 		    $actionCancel['title'] = "Cancelar";
-		    $actionCancel['icon'] = $this->container->getParameter('server_url')."git/pushNotification/web/public/img/push/cancel.png";
-		    $actionCancel['url'] = $this->container->getParameter('server_url')."git/pushNotification/web/public/img/push/image-troll.jpg";
+		    $actionCancel['icon'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/' . "public/img/push/cancel.png";
+		    $actionCancel['url'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/' . "public/img/push/image-troll.jpg";
 		    // array_push($payload['actions'], $actionCancel);
 
 

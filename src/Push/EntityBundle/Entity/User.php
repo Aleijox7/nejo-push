@@ -50,6 +50,14 @@ class User
     private $validated = true;
 
     /**
+     * @var int
+     *
+     * @ORM\ManyToOne(targetEntity="Client")
+     * @ORM\JoinColumn(name="client", referencedColumnName="id")
+     */
+    private $client;
+
+    /**
      * Get id
      *
      * @return int
@@ -135,7 +143,7 @@ class User
      *
      * @param boolean $validated
      *
-     * @return IaUser
+     * @return User
      */
     public function setValidated($validated)
     {
@@ -152,6 +160,30 @@ class User
     public function getValidated()
     {
         return $this->validated;
+    }
+
+    /**
+     * Set client
+     *
+     * @param integer $client
+     *
+     * @return User
+     */
+    public function setClient($client)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return int
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 }
 

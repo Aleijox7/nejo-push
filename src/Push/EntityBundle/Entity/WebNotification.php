@@ -50,6 +50,21 @@ class WebNotification
      */
     private $publicKey;
 
+    /**
+     * @var int
+     *
+     * @ORM\ManyToOne(targetEntity="Client")
+     * @ORM\JoinColumn(name="client", referencedColumnName="id")
+     */
+    private $client;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="reference", type="text")
+     */
+    private $reference;
+
 
     /**
      * Get id
@@ -155,6 +170,54 @@ class WebNotification
     public function getPublicKey()
     {
         return $this->publicKey;
+    }
+
+    /**
+     * Set client
+     *
+     * @param integer $client
+     *
+     * @return IaWebNotification
+     */
+    public function setClient($client)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return int
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * Set reference
+     *
+     * @param integer $reference
+     *
+     * @return IaWebNotification
+     */
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
+
+    /**
+     * Get reference
+     *
+     * @return int
+     */
+    public function getReference()
+    {
+        return $this->reference;
     }
 }
 

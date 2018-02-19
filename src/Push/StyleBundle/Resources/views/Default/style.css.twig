@@ -1,0 +1,214 @@
+/* COLORES CORPORATIVOS */ 
+:root {
+  --color-principal: #{{ coloresPrincipales[0].HEX }} !important;
+  --color-hover: #{{ colorSecundario }} !important;
+  --color-texto-blanco: #fff !important; 
+}
+
+body{
+	background-color: white !important;
+}
+
+input {
+  /*border-image-source: linear-gradient(to right, #{{ coloresPrincipales[0].HEX }} 0%, #{{ colorSecundario }} 100%) !important;*/
+  border-color: #{{ coloresPrincipales[0].HEX }} !important;
+  border-width: 1px !important;
+  border-image-slice: 1 !important;
+  border-radius: 5px !important;
+  color: #{{ coloresPrincipales[0].HEX }} !important;
+}
+
+label{
+    color: rgba({{ coloresPrincipales[0].RGB.r }}, {{ coloresPrincipales[0].RGB.g }}, {{ coloresPrincipales[0].RGB.b }},0.9) !important;
+}
+
+
+.form-control:focus {
+    /*color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;*/
+    box-shadow: 0 0 0 0.2rem rgba({{ coloresPrincipales[0].RGB.r }},{{ coloresPrincipales[0].RGB.g }},{{ coloresPrincipales[0].RGB.b }},.25);
+}
+
+.gradient {
+    /*background-color: #{{ coloresPrincipales[0].HEX }} !important;
+    background: -webkit-linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ colorSecundario }}) !important;
+    background: -o-linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ colorSecundario }}) !important;
+    background: -moz-linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ colorSecundario }}) !important;
+    background: linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ colorSecundario }}) !important;*/
+    background: linear-gradient(-15deg, #ffffff, #000000, #ffffff, #000000) !important;
+    background-size: 800% 800% !important;
+    -webkit-animation: Gradient 10s ease infinite !important;
+    -moz-animation: Gradient 10s ease infinite !important;
+    animation: Gradient 10s ease infinite !important;
+}
+
+.gradient:before {
+    opacity: 0.8;
+    background-color: #{{ coloresPrincipales[0].HEX }};
+    background: -webkit-linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ colorSecundario }});
+    background: -o-linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ colorSecundario }});
+    background: -moz-linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ colorSecundario }});
+    background: linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ colorSecundario }});
+    bottom: 0;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
+}
+
+.btn-gradient {
+	-webkit-appearance: inherit;
+	background-image: linear-gradient(to right, #{{ coloresPrincipales[0].HEX }} 0%, #{{ colorSecundario }} 100%) !important;
+	border-radius: 40px !important;
+	box-sizing: border-box !important;
+	color: #{{ coloresPrincipales[0].HEX }} !important;
+	display: block !important;
+	font: 1.125rem 'Oswald', Arial, sans-serif !important; /*18*/
+	height: 50px !important;
+	letter-spacing: 1px !important;
+	margin: 0 auto !important;
+	padding: 2px !important;
+	position: relative !important;
+	text-decoration: none !important;
+	text-transform: uppercase !important;
+	width: 150px !important;
+	z-index: 2 !important;
+}
+
+.btn-gradient:hover {
+	color: #fff !important;
+}
+
+.btn-gradient span {
+	align-items: center !important;
+	background: #fff !important;
+	border-radius: 40px !important;
+	display: flex !important;
+	justify-content: center !important;
+	height: 100% !important;
+	transition: background .5s ease !important;
+	width: 100% !important;
+}
+
+.btn-gradient:hover span {
+	background: transparent !important;
+}
+
+.btn-logout{
+	height: 30px !important;
+	width: 130px !important;
+}
+
+.btn-submit{
+    all: initial;
+    margin:auto;
+}
+
+.gradient-move {
+	background: -webkit-radial-gradient(70% 70% ellipse,#{{ coloresSecundarios[0].HEX }} 8%,#{{ coloresPrincipales[0].HEX }} 42%,#{{ coloresPrincipales[2].HEX }} 58%);
+    background: radial-gradient(ellipse at 70% 70%,#{{ coloresSecundarios[0].HEX }} 8%,#{{ coloresPrincipales[0].HEX }} 42%,#{{ coloresPrincipales[2].HEX }} 58%);
+    height: 100%;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+}
+
+.gradient-animation{
+	animation: GradientRotation 12s steps(120) infinite;
+    margin-left: -25%;
+    margin-top: -75%;
+    min-height: 150%;
+    min-width: 150%;
+    padding-bottom: 75%;
+    padding-top: 75%;
+}
+
+.header-gradient{
+	background-color: #{{ coloresSecundarios[2].HEX }};
+    overflow: hidden;
+    display: block;
+}
+
+@-webkit-keyframes GradientRotation{
+	0%{-webkit-transform:rotate(0deg);
+		transform:rotate(0deg)}
+		to{
+			-webkit-transform:rotate(360deg);
+			transform:rotate(360deg)
+		}
+	}
+
+	@keyframes GradientRotation{
+		0%{
+			-webkit-transform:rotate(0deg);
+			transform:rotate(0deg)
+		}
+		to{
+			-webkit-transform:rotate(360deg);
+			transform:rotate(360deg)
+		}
+	}
+
+/*CHECKBOX*/
+.checkbox label:after, 
+.radio label:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.checkbox .cr,
+.radio .cr {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #{{ coloresPrincipales[0].HEX }};
+    border-radius: .25em;
+    width: 1.3em;
+    height: 1.3em;
+    float: left;
+    margin-right: .5em;
+}
+
+.radio .cr {
+    border-radius: 50%;
+}
+
+.checkbox .cr .cr-icon,
+.radio .cr .cr-icon {
+    position: absolute;
+    font-size: .8em;
+    line-height: 0;
+    top: 16%;
+    left: 18%;
+}
+
+.radio .cr .cr-icon {
+    margin-left: 0.04em;
+}
+
+.checkbox label input[type="checkbox"],
+.radio label input[type="radio"] {
+    display: none;
+}
+
+.checkbox label input[type="checkbox"] + .cr > .cr-icon,
+.radio label input[type="radio"] + .cr > .cr-icon {
+    transform: scale(3) rotateZ(-20deg);
+    opacity: 0;
+    transition: all .3s ease-in;
+}
+
+.checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+.radio label input[type="radio"]:checked + .cr > .cr-icon {
+    transform: scale(1) rotateZ(0deg);
+    opacity: 1;
+}
+
+.checkbox label input[type="checkbox"]:disabled + .cr,
+.radio label input[type="radio"]:disabled + .cr {
+    opacity: .5;
+}

@@ -1,6 +1,0 @@
-/*aixo fa que el select2 no ocupi tota la pantalla*/
-
-.select2-dropdown--below{
-    position:absolute !important;   
-    width: 50px !important;
-}
