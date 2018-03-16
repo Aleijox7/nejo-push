@@ -52,6 +52,7 @@ class WebNotificationController extends FOSRestController
         $endpoint = $request->request->get('endpoint');
         $auth = $request->request->get('auth');
         $publicKey = $request->request->get('publicKey');
+        $reference = $request->request->get('reference');
 
         if ($endpoint != NULL && $auth != NULL && $publicKey != NULL && $user != NULL) {
         	$webNotificationVerify = $em->getRepository('PushEntityBundle:WebNotification')->findOneBy(array('user'=>$user->getId(),'endpoint'=>$endpoint,'auth'=>$auth,'publicKey'=>$publicKey));
@@ -65,6 +66,11 @@ class WebNotificationController extends FOSRestController
 		        $webNotification->setAuth($auth);
 		        $webNotification->setPublicKey($publicKey);
 		        $webNotification->setEndpoint($endpoint);
+		        if ($reference != NULL) {
+		        	$webNotification->setReference($reference);
+		        } else {
+		        	$webNotification->setReference($user->getId());
+		        }
 
 		        $em->persist($webNotification);
 		        $em->flush();
@@ -95,7 +101,7 @@ class WebNotificationController extends FOSRestController
 	}
 
     /**
-	* @Route("/send-notifications/")
+	* @Route("/send-notifications/", name="send_notifications")
 	* @Method({"POST"})
 	* 
 	*
@@ -141,14 +147,15 @@ class WebNotificationController extends FOSRestController
 		foreach ($webNotifications as $webNotification) {
 			$aux = array();
 
+
 			$aux['endpoint'] = $webNotification->getEndpoint();
 		    // $aux['payload'] = 'TEST';
 		    $payload = array();
-		    $payload['body'] = "Nueva gama de sabores en chicles 5";
+		    $payload['body'] = "Nueva gama de sabores Chicles 5";
 		    $payload['title'] = "Chicles 5!!";
-		    $payload['badge'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/' . "public/img/push/badge.png";
-		    $payload['icon'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/' . "public/img/push/five-logo.png";
-		    $payload['image'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/' . "public/img/push/five.jpg";
+		    $payload['badge'] = $this->container->getParameter('server_url') . "git/pushNotification/web/" . "public/img/push/five-badge.png";
+		    $payload['icon'] = $this->container->getParameter('server_url') . "git/pushNotification/web/" . "public/img/push/five-logo.png";
+		    $payload['image'] = $this->container->getParameter('server_url') . "git/pushNotification/web/" . "public/img/push/five.jpg";
 		    // $payload['silent'] = true;
 		    $payload['renotify'] = true;
 		    $payload['tag'] = 'go-to-service-action';		    
@@ -158,16 +165,16 @@ class WebNotificationController extends FOSRestController
 		    $actionAccept = array();
 		    $actionAccept['action'] = "go-to-service-action";
 		    $actionAccept['title'] = "Ver trailer";
-		    $actionAccept['icon'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/' . "public/img/push/check.png";
-		    $actionAccept['url'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/' . "public/img/push/reportaito-miarma.gif";
+		    $actionAccept['icon'] = $this->container->getParameter('server_url') . "git/pushNotification/web/" . "public/img/push/check.png";
+		    $actionAccept['url'] = $this->container->getParameter('server_url') . "git/pushNotification/web/" . "public/img/push/five-sound.mp3";
 		    // $actionAccept['url'] = $this->generateUrl('login_form');
 		    array_push($payload['actions'], $actionAccept);
 
 		    $actionCancel = array();
 		    $actionCancel['action'] = "cancel-service-action";
 		    $actionCancel['title'] = "Cancelar";
-		    $actionCancel['icon'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/' . "public/img/push/cancel.png";
-		    $actionCancel['url'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/' . "public/img/push/image-troll.jpg";
+		    $actionCancel['icon'] = $this->container->getParameter('server_url') . "git/pushNotification/web/" . "public/img/push/cancel.png";
+		    $actionCancel['url'] = $this->container->getParameter('server_url') . "git/pushNotification/web/" . "public/img/push/five-sound.mp3";
 		    // array_push($payload['actions'], $actionCancel);
 
 
@@ -177,6 +184,8 @@ class WebNotificationController extends FOSRestController
 
 		    $notifications[] = $aux;
 		}
+
+		dump($notifications);
 
 		$auth = array(
 		    'GCM' => $this->container->getParameter('push_api_key'), // deprecated and optional, it's here only for compatibility reasons
@@ -201,15 +210,17 @@ class WebNotificationController extends FOSRestController
 		    ));
 		}
 		$webPush->flush();
-		exit();
 
-		// send one notification and flush directly
-		// $webPush->sendNotification(
-		//     $notifications[0]['endpoint'],
-		//     $notifications[0]['payload'], // optional (defaults null)
-		//     $notifications[0]['userPublicKey'], // optional (defaults null)
-		//     $notifications[0]['userAuthToken'], // optional (defaults null)
-		//     true // optional (defaults false)
-		// );
+		$view->setStatusCode('200');
+
+		$view->setData(array(
+			'status' => 1,
+			'msg' => 'Notificaciones enviadas correctamente',
+			'results' => NULL,
+		));
+
+		$view->setFormat('json');
+
+		return $this->handleView($view);
 	}
 }

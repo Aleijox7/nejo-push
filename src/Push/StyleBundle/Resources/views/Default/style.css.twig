@@ -212,3 +212,24 @@ label{
 .radio label input[type="radio"]:disabled + .cr {
     opacity: .5;
 }
+
+.progress {
+	border-radius: 50px;
+	background-color: rgba({{ coloresPrincipales[0].RGB.r }},{{ coloresPrincipales[0].RGB.g }},{{ coloresPrincipales[0].RGB.b }},.25);
+}
+
+.progress-bar {
+	border-radius: 50px;
+	background-color: #{{ coloresPrincipales[0].HEX }} !important;
+}
+
+.divProgress{
+	margin: 0 auto;
+	padding: 10px;
+}
+
+.background-gradient {
+	background: no-repeat linear-gradient(-66deg,#f8f9fa,#f8f9fa 50%,#{{ coloresSecundarios[0].HEX }} 0,#{{ coloresPrincipales[0].HEX }});
+	-webkit-transition: all 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+	background-size: 100% 200%;
+}
