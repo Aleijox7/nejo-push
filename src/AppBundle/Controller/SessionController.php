@@ -18,7 +18,7 @@ class SessionController extends FOSRestController
 {
 	/**
 	* @Route("/api/login/")
-	* @Method({"POST"})
+	* @Method({"POST", "GET"})
 	* 
 	*/
 	public function loginUserAction(Request $request) {

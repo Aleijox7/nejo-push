@@ -8,7 +8,7 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-    	$redirect = $this->forward('AppBundle:Session:controlSession')->getContent();
+    	$redirect = $this->forward('ApiBundle:Session:controlSession')->getContent();
         $redirect = json_decode($redirect,true);
         if ($redirect['status'] == 1) {
             return $this->redirectToRoute('login_form');

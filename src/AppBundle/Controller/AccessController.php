@@ -30,7 +30,7 @@ class AccessController extends Controller
     		$username = $request->request->get('username');
     		$password = $request->request->get('password');
 
-    		$loginUser = $this->forward('AppBundle:Session:loginUser', array($request))->getContent();
+    		$loginUser = $this->forward('ApiBundle:Session:loginUser', array($request))->getContent();
     		$loginUser = json_decode($loginUser,true);
 
     		if ($loginUser['status'] != 1) {
