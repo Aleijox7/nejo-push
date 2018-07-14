@@ -1,5 +1,5 @@
 @import "{{ site.theme }}";
 .page-header{
 	background-color: #ff0052;
-    background-image: linear-gradient(120deg, #ee583f, #ff0052);
+    background-image: linear-gradient(120deg, #ee583f, #ff0052) !important;
 }
