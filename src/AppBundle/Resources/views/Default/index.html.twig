@@ -23,10 +23,14 @@
 			</div>
 			<a class="btn-gradient" id="btnNotification"><span>Boton</span></a>
 		</div>
+		<div class="col-xs-12 text-center" style="margin-top:30px;">
+			<canvas style="box-shadow: 0px 0px 5px whitesmoke;width: 500px;height: 200px;"></canvas>
+		</div>
 	</div>
 {% endblock %}
 {% block javascriptsAdcionales %}
 {{parent()}}
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
 <script type="text/javascript">
 var width = 0;
 var timerProcess = setInterval(function(){}, 200000);
@@ -76,5 +80,48 @@ function finishProgressBar(){
 	stopProgressBar();
 	$('.progress-bar').width('100%');
 }
+</script>
+<script type="text/javascript">
+var canvas = document.querySelector("canvas");
+
+var signaturePad = new SignaturePad(canvas);
+
+// Returns signature image as data URL (see https://mdn.io/todataurl for the list of possible parameters)
+signaturePad.toDataURL(); // save image as PNG
+signaturePad.toDataURL("image/jpeg"); // save image as JPEG
+signaturePad.toDataURL("image/svg+xml"); // save image as SVG
+
+// Draws signature image from data URL.
+// NOTE: This method does not populate internal data structure that represents drawn signature. Thus, after using #fromDataURL, #toData won't work properly.
+// signaturePad.fromDataURL("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==");
+
+// Returns signature image as an array of point groups
+const data = signaturePad.toData();
+
+// Draws signature image from an array of point groups
+signaturePad.fromData(data);
+
+// Clears the canvas
+signaturePad.clear();
+
+// Returns true if canvas is empty, otherwise returns false
+signaturePad.isEmpty();
+
+// Unbinds all event handlers
+signaturePad.off();
+
+// Rebinds all event handlers
+signaturePad.on();
+
+function resizeCanvas() {
+    var ratio =  Math.max(window.devicePixelRatio || 1, 1);
+    canvas.width = canvas.offsetWidth * ratio;
+    canvas.height = canvas.offsetHeight * ratio;
+    canvas.getContext("2d").scale(ratio, ratio);
+    // signaturePad.clear(); // otherwise isEmpty() might return incorrect value
+}
+
+// window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
 </script>
 {% endblock %}	
