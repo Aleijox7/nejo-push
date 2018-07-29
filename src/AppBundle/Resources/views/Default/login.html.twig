@@ -5,7 +5,7 @@
 {% endblock %}
 {% block head_javascripts %}
     {# <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet"> #}
-    <link href="https://getbootstrap.com/docs/4.0/examples/floating-labels/floating-labels.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/4.0/examples/floating-labels/floating-labels.css" rel="stylesheet">    
 {% endblock %}
 {% block ante_body %}
 	{# <div class="col-xs-12 col-sm-8 col-sm-offset-1">
@@ -17,32 +17,46 @@
 		</form>
 	</div> #}
 	<body class="text-center">
-		<form class="form-signin text-left" id="formLogin" method="POST" action="{{path('login')}}">
-			<img class="mb-4" src="{{ asset('public/img/logos/logo-login.png') }}">
-			<h1 class="h3 mb-3 font-weight-normal">Login</h1>
-			<div class="form-label-group">
-		        <input type="text" id="inputUsername" class="form-control" placeholder="Usuario" required="" autofocus="" name="username">
-		        <label for="inputUsername">Usuario</label>
-		    </div>
-		    <div class="form-label-group">
-		        <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required="" autofocus="" name="password">
-		        <label for="inputPassword">Contraseña</label>
-		    </div>
-			<div class="checkbox mb-3">
-	          <label>
-	            <input type="checkbox" value="">
-	            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
-	            Recuérdame
-	          </label>
+		<canvas class="rain-bg" id="canvas" width="1920" height="943"></canvas>
+		<div class="container">
+			<div class="bands">
+				<div class="band__1"></div>
+				<div class="band__2"></div>
 			</div>
-			<div class="text-center">
-				<button type="submit" class="btn-submit" name="submit">
-					<a type="submit" class="btn-gradient">
-						<span><i class="fa fa-sign-in-alt"></i>&nbsp;Entrar</span>
-					</a>
-				</button>
-			</div>
-			<p class="mt-5 mb-3 text-muted">Nejo Push © {{'now'|date('Y')}} </p>
-		</form>
+			<form class="form-signin text-left" id="formLogin" method="POST" action="{{path('login')}}">
+				<div class="col-xs-12 text-center" style="margin-bottom:20px;"><img style="max-width:100%;" src="{{ asset('public/img/logos/logo-login.png') }}"></div>
+				<h1 class="h3 mb-3 font-weight-normal">Login</h1>
+				<div class="form-label-group">
+			        <input type="text" id="inputUsername" class="form-control" placeholder="Usuario" required="" autofocus="" name="username">
+			        <label for="inputUsername">Usuario</label>
+			    </div>
+			    <div class="form-label-group">
+			        <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required="" autofocus="" name="password">
+			        <label for="inputPassword">Contraseña</label>
+			    </div>
+				<div class="checkbox mb-3">
+		          <label>
+		            <input type="checkbox" value="">
+		            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+		            Recuérdame
+		          </label>
+				</div>
+				<div class="text-center">
+					<button type="submit" class="btn-submit" name="submit">
+						<a type="submit" class="btn-gradient">
+							<span><i class="fa fa-sign-in-alt"></i>&nbsp;Entrar</span>
+						</a>
+					</button>
+				</div>
+				<p class="mt-5 mb-3 text-muted">Nejo Push © {{'now'|date('Y')}} </p>
+			</form>
+		</div>
+		{% block javascripts %}
+		{{parent()}}
+		<script src="{{absolute_url('assets/js/rain.js')}}"></script>
+		<script type="text/javascript">
+		$('#inputUsername').focus();
+		</script>
+		{% endblock %}
 	</body>
 {% endblock %}
