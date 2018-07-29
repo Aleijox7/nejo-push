@@ -1,7 +1,7 @@
 /* COLORES CORPORATIVOS */ 
 :root {
   --color-principal: #{{ coloresPrincipales[0].HEX }} !important;
-  --color-hover: #{{ colorSecundario }} !important;
+  --color-hover: #{{ coloresPrincipales[4].HEX }} !important;
   --color-texto-blanco: #fff !important; 
 }
 
@@ -10,7 +10,7 @@ body{
 }
 
 input {
-  /*border-image-source: linear-gradient(to right, #{{ coloresPrincipales[0].HEX }} 0%, #{{ colorSecundario }} 100%) !important;*/
+  /*border-image-source: linear-gradient(to right, #{{ coloresPrincipales[0].HEX }} 0%, #{{ coloresPrincipales[4].HEX }} 100%) !important;*/
   border-color: #{{ coloresPrincipales[0].HEX }} !important;
   border-width: 1px !important;
   border-image-slice: 1 !important;
@@ -33,10 +33,10 @@ label{
 
 .gradient {
     /*background-color: #{{ coloresPrincipales[0].HEX }} !important;
-    background: -webkit-linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ colorSecundario }}) !important;
-    background: -o-linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ colorSecundario }}) !important;
-    background: -moz-linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ colorSecundario }}) !important;
-    background: linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ colorSecundario }}) !important;*/
+    background: -webkit-linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ coloresPrincipales[4].HEX }}) !important;
+    background: -o-linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ coloresPrincipales[4].HEX }}) !important;
+    background: -moz-linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ coloresPrincipales[4].HEX }}) !important;
+    background: linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ coloresPrincipales[4].HEX }}) !important;*/
     background: linear-gradient(-15deg, #ffffff, #000000, #ffffff, #000000) !important;
     background-size: 800% 800% !important;
     -webkit-animation: Gradient 10s ease infinite !important;
@@ -47,10 +47,10 @@ label{
 .gradient:before {
     opacity: 0.8;
     background-color: #{{ coloresPrincipales[0].HEX }};
-    background: -webkit-linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ colorSecundario }});
-    background: -o-linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ colorSecundario }});
-    background: -moz-linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ colorSecundario }});
-    background: linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ colorSecundario }});
+    background: -webkit-linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ coloresPrincipales[4].HEX }});
+    background: -o-linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ coloresPrincipales[4].HEX }});
+    background: -moz-linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ coloresPrincipales[4].HEX }});
+    background: linear-gradient(right, #{{ coloresPrincipales[0].HEX }}, #{{ coloresPrincipales[4].HEX }});
     bottom: 0;
     content: "";
     left: 0;
@@ -62,7 +62,7 @@ label{
 
 .btn-gradient {
 	-webkit-appearance: inherit;
-	background-image: linear-gradient(to right, #{{ coloresPrincipales[0].HEX }} 0%, #{{ colorSecundario }} 100%) !important;
+	background-image: linear-gradient(to right, #{{ coloresPrincipales[0].HEX }} 0%, #{{ coloresPrincipales[4].HEX }} 100%) !important;
 	border-radius: 40px !important;
 	box-sizing: border-box !important;
 	color: #{{ coloresPrincipales[0].HEX }} !important;
