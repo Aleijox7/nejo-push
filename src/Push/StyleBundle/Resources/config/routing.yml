@@ -1,3 +1,7 @@
 push_style_css:
     path:     /css/
     defaults: { _controller: PushStyleBundle:Style:style }
+
+push_rain_js:
+    path:     /rain-js/
+    defaults: { _controller: PushStyleBundle:Style:rainJS }

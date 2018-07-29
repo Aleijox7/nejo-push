@@ -56,6 +56,54 @@ class StyleController extends Controller
 		return $response;
 	}
 
+	public function rainJSAction(Request $request)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$token = $request->getSession()->get('jwt');
+
+		$colorPrincipal = 'ff0052';
+		$colorSecundario = '8e2b88';
+
+		// $colorPrincipal = 'd92d77';
+		$colorSecundario = 'ee583f';
+
+		if ($token != NULL) {
+			$tokenUser = $em->getRepository('PushEntityBundle:UserToken')->findOneByToken($token);
+
+			if ($tokenUser != NULL) {
+				$user = $tokenUser->getUser();
+				$client = $user->getClient();
+				if ($client != NULL) {
+					$colorPrincipal = $client->getPrimaryColor();
+					$colorSecundario = $client->getPrimaryColor();
+					if ($client->getSecondaryColor() != NULL) {
+						$colorSecundario = $client->getSecondaryColor();
+					}
+				}
+			}
+		}
+
+		$coloresPrincipales = $this->getGradient($colorPrincipal);
+		$coloresSecundarios = $this->getGradient($colorSecundario);
+		
+		// $response = new Response($this->renderView('PushStyleBundle:Default:style_old.css.twig',array(
+		// 		'colorPrincipal' => $colorPrincipal, 
+		// 		'colorSecundario' => $colorSecundario, 
+		// 		'coloresPrincipales' => $coloresPrincipales, 
+		// 		'coloresSecundarios' => $coloresSecundarios, 
+		// )));
+
+		$response = new Response($this->renderView('PushStyleBundle:Default:rain.js.twig',array(
+				'colorPrincipal' => $colorPrincipal, 
+				'colorSecundario' => $colorSecundario, 
+				'coloresPrincipales' => $coloresPrincipales, 
+				'coloresSecundarios' => $coloresSecundarios, 
+		)));
+		$response->headers->set('Content-Type', 'text/javascript');
+
+		return $response;
+	}
+
 	function getGradient($HexFrom, $HexTo=0, $ColorSteps=9) {
 		$FromRGB['r'] = hexdec(substr($HexFrom, 0, 2));
 		$FromRGB['g'] = hexdec(substr($HexFrom, 2, 2));

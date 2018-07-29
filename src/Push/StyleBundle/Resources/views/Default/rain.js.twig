@@ -6,7 +6,7 @@ canvas.height = window.innerHeight;
 var ctx = canvas.getContext('2d');
 var w = canvas.width;
 var h = canvas.height;
-ctx.strokeStyle = 'rgba(63,139,222,0.20)';
+ctx.strokeStyle = 'rgba({{ coloresPrincipales[0].RGB.r }}, {{ coloresPrincipales[0].RGB.g }}, {{ coloresPrincipales[0].RGB.b }},0.20)';
 ctx.lineWidth = 1;
 ctx.lineCap = 'round';
 
