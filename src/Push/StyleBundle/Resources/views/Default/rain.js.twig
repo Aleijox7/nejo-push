@@ -1,3 +1,14 @@
+setTimeout(function(){
+	$('.animation-hidden').addClass("animation");
+	$('.animation-hidden').one("webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
+		function(event) {
+			render();
+			$('.white-close').addClass("white-close-animation");
+		}
+	);
+}, 300);
+
+
 // Rain Animation
 var canvas = $('#canvas')[0];
 canvas.width = window.innerWidth;
@@ -55,5 +66,3 @@ function render() {
 	draw();
 	requestAnimationFrame(render);
 }
-
-render();

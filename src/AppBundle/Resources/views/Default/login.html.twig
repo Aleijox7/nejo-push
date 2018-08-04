@@ -18,12 +18,13 @@
 	</div> #}
 	<body class="text-center">
 		<canvas class="rain-bg" id="canvas" width="1920" height="943"></canvas>
+		<div class="white-close"></div>
 		<div class="container">
 			<div class="bands">
 				<div class="band__1"></div>
 				<div class="band__2"></div>
 			</div>
-			<form class="form-signin text-left" id="formLogin" method="POST" action="{{path('login')}}">
+			<form class="form-signin text-left animation-hidden" id="formLogin" method="POST" action="{{path('login')}}">
 				<div class="col-xs-12 text-center" style="margin-bottom:20px;"><img style="max-width:100%;" src="{{ asset('public/img/logos/logo-login.png') }}"></div>
 				<h1 class="h3 mb-3 font-weight-normal">Login</h1>
 				<div class="form-label-group">
