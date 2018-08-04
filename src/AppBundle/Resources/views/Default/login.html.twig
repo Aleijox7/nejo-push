@@ -4,8 +4,8 @@
 {% block header %}
 {% endblock %}
 {% block head_javascripts %}
-    {# <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet"> #}
-    <link href="https://getbootstrap.com/docs/4.0/examples/floating-labels/floating-labels.css" rel="stylesheet">    
+    {# <link href="https://getbootstrap.com/docs/4.1/examples/sign-in/signin.css" rel="stylesheet"> #}
+    <link href="https://getbootstrap.com/docs/4.1/examples/floating-labels/floating-labels.css" rel="stylesheet">    
 {% endblock %}
 {% block ante_body %}
 	{# <div class="col-xs-12 col-sm-8 col-sm-offset-1">
@@ -57,7 +57,7 @@
 		<script src="{{path('push_rain_js')}}"></script>
 		{# // <script src="{{absolute_url('assets/js/rain.js')}}"></script> #}
 		<script type="text/javascript">
-		$('#inputUsername').focus();
+		$('#inputUsername').click();
 		</script>
 		{% endblock %}
 	</body>
