@@ -15,6 +15,7 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use Doctrine\ORM\EntityRepository;
 use Firebase\JWT\JWT;
 use Minishlink\WebPush\WebPush;
+use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\VAPID;
 use Push\EntityBundle\Entity\WebNotification;
 
@@ -146,9 +147,6 @@ class WebNotificationController extends FOSRestController
 
 		foreach ($webNotifications as $webNotification) {
 			$aux = array();
-
-
-			$aux['endpoint'] = $webNotification->getEndpoint();
 		    // $aux['payload'] = 'TEST';
 		    $payload = array();
 		    $payload['body'] = "Nueva gama de sabores Chicles 5";
@@ -179,8 +177,12 @@ class WebNotificationController extends FOSRestController
 
 
 		    $aux['payload'] = json_encode($payload,true);
-		    $aux['userPublicKey'] = $webNotification->getPublicKey();
-		    $aux['userAuthToken'] = $webNotification->getAuth();
+			
+			$aux['subscription'] = Subscription::create([
+				'endpoint' => $webNotification->getEndpoint(), // Firefox 43+,
+				'publicKey' => $webNotification->getPublicKey(), // base 64 encoded, should be 88 chars
+				'authToken' => $webNotification->getAuth(), // base 64 encoded, should be 24 chars
+			]);
 
 		    $notifications[] = $aux;
 		}
@@ -188,7 +190,7 @@ class WebNotificationController extends FOSRestController
 		dump($notifications);
 
 		$auth = array(
-		    'GCM' => $this->container->getParameter('push_api_key'), // deprecated and optional, it's here only for compatibility reasons
+		    // 'GCM' => $this->container->getParameter('push_api_key'), // deprecated and optional, it's here only for compatibility reasons
 		    'VAPID' => array(
 		        'subject' => 'mailto:aleijox_seven@hotmail.com', // can be a mailto: or your website address
 		        'publicKey' => $this->container->getParameter('vapid_public_key'), // (recommended) uncompressed public key P-256 encoded in Base64-URL
@@ -198,15 +200,15 @@ class WebNotificationController extends FOSRestController
 		    ),
 		);
 
+		dump($auth);
 		$webPush = new WebPush($auth);
+		dump($webPush);
 
 		// send multiple notifications with payload
 		foreach ($notifications as $notification) {
 		    dump($webPush->sendNotification(
-		        $notification['endpoint'],
-		        $notification['payload'], // optional (defaults null)
-		        $notification['userPublicKey'], // optional (defaults null)
-		        $notification['userAuthToken'] // optional (defaults null)
+		        $notification['subscription'],
+		        'Hi'
 		    ));
 		}
 		$webPush->flush();

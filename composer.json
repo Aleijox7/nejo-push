@@ -23,8 +23,8 @@
         "friendsofsymfony/jsrouting-bundle": "^1.6",
         "friendsofsymfony/rest-bundle": "^2.2",
         "incenteev/composer-parameter-handler": "^2.0",
-        "minishlink/web-push": "1.4.3",
-        "minishlink/web-push-bundle": "^1.4",
+        "minishlink/web-push": "^4.0",
+        "minishlink/web-push-bundle": "^3.0",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^3.0.2",
         "symfony/monolog-bundle": "^3.1.0",
@@ -55,7 +55,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.1"
+            "php": "7.2"
         },
         "sort-packages": true
     },

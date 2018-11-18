@@ -66,3 +66,15 @@ function render() {
 	draw();
 	requestAnimationFrame(render);
 }
+
+$(window).on('resize', function () {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    ctx = canvas.getContext('2d');
+    w = canvas.width;
+    h = canvas.height;
+    ctx.strokeStyle = 'rgba(255, 0, 82,0.20)';
+    ctx.lineWidth = 1;
+    ctx.lineCap = 'round';
+    draw();
+});
