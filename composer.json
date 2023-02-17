@@ -19,7 +19,7 @@
         "beberlei/DoctrineExtensions": "^1.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
-        "firebase/php-jwt": "^4.0",
+        "firebase/php-jwt": "^6.0",
         "friendsofsymfony/jsrouting-bundle": "^1.6",
         "friendsofsymfony/rest-bundle": "^2.2",
         "incenteev/composer-parameter-handler": "^2.0",
